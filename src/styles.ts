@@ -1,12 +1,9 @@
+import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 
 export const cores = {
-  fundo: '#808080',
-  cinza1: '#202020',
-  black: '#000',
-  text: '#ffffff',
-  red: '#FF0000',
-  cardP: '#D9D9D9'
+  white: '#fff',
+  color: 'rgba(40, 168, 225)'
 }
 
 export const breakponints = {
@@ -21,16 +18,6 @@ export const GlobalCss = createGlobalStyle`
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
     list-style: none;
-  }
-
-  body {
-    background-color: ${cores.fundo};
-    background-image: linear-gradient(50deg, ${cores.fundo}, ${cores.cinza1});
-    color: ${cores.text};
-  }
-
-  html {
-    scroll-behavior: smooth;
   }
 
   .container {
