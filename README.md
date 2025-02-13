@@ -1,3 +1,3 @@
-# Sistema WEB Risk Serviços | Setor de sinistros
+# Jalim Sistemas | Sinistro Web
 
-Sistema WEB para o setor de sinistros
+Sistema WEB do setor de sinistros
