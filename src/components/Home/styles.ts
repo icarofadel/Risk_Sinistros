@@ -3,7 +3,8 @@ import { cores } from '../../styles'
 
 export const HomeSection = styled.section`
   h2 {
-    margin-top: 16px;
+    padding: 8px;
+    color: #fff;
     display: flex;
     justify-content: center;
   }

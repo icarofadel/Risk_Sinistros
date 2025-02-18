@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './components/Home'
 import { useEffect, useRef } from 'react'
+import FormSinistro from './components/FormCadSinistro'
 
 function App() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -14,14 +15,17 @@ function App() {
   }, [])
   return (
     <>
+      <audio ref={audioRef} autoPlay loop>
+        <source src="/sons/music.mp3" type="audio/mp3" />
+        Seu navegador não suporta a tag de áudio.
+      </audio>
       <GlobalCss />
       <Header />
-      <div className="container">
-        <Home />
-        <audio ref={audioRef} autoPlay loop>
-          <source src="/sons/music.mp3" type="audio/mp3" />
-          Seu navegador não suporta a tag de áudio.
-        </audio>
+      <div className="fundo">
+        <div className="container">
+          <Home />
+          <FormSinistro />
+        </div>
       </div>
       <Footer />
     </>
