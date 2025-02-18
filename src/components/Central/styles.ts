@@ -15,14 +15,3 @@ export const ControlButtons = styled.div`
   display: grid;
   justify-items: start;
 `
-
-export const Buttons = styled.button`
-  background-color: ${cores.color};
-  color: ${cores.white};
-  padding: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 16px;
-  border-radius: 16px;
-  cursor: pointer;
-`

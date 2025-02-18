@@ -31,3 +31,8 @@ export const Row = styled.div`
 export const TextLabel = styled.label`
   margin: 0 8px 0;
 `
+export const CampoButtons = styled.div`
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+`

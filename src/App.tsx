@@ -1,9 +1,11 @@
+import { BrowserRouter } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+
 import { GlobalCss } from './styles'
+
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Home from './components/Home'
-import { useEffect, useRef } from 'react'
-import FormSinistro from './components/FormCadSinistro'
+import Rotas from './routes'
 
 function App() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -21,12 +23,13 @@ function App() {
         Seu navegador não suporta a tag de áudio.
       </audio>
       <Header />
-      <div className="fundo">
-        <div className="container">
-          <Home />
-          <FormSinistro />
+      <BrowserRouter>
+        <div className="fundo">
+          <div className="container">
+            <Rotas />
+          </div>
         </div>
-      </div>
+      </BrowserRouter>
       <Footer />
     </>
   )

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import * as S from './styles'
+import Botao from '../Button'
 
 const FormSinistro = () => {
   const [selected, setSelected] = useState<string | null>(null)
@@ -157,6 +158,23 @@ const FormSinistro = () => {
               <input type="date" />
             </S.Row>
           </div>
+          <S.CampoButtons>
+            <Botao type="link" to={`/`} title="Fechar sinistro">
+              Fechar sinistro
+            </Botao>
+            <Botao type="submit" to={`/`} title="Excluir sinistro">
+              Excluir Sinistro
+            </Botao>
+            <Botao type="submit" to={`/`} title="Imprimir sinistro">
+              Imprimir Sinistro
+            </Botao>
+            <Botao type="submit" to={`/`} title="Salvar">
+              Salvar
+            </Botao>
+            <Botao type="submit" to={`/`} title="Adicionar novo sinistro">
+              Adicionar novo sinistro
+            </Botao>
+          </S.CampoButtons>
         </div>
       </S.CampoForm>
     </form>
