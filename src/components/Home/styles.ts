@@ -3,8 +3,8 @@ import { cores } from '../../styles'
 
 export const HomeSection = styled.section`
   h2 {
+    color: ${cores.color};
     padding: 8px;
-    color: #fff;
     display: flex;
     justify-content: center;
   }
@@ -18,6 +18,7 @@ export const ControlButtons = styled.div`
 
 export const Buttons = styled.button`
   background-color: ${cores.color};
+  color: ${cores.white};
   padding: 16px;
   font-size: 16px;
   font-weight: bold;

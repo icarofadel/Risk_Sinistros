@@ -15,11 +15,11 @@ function App() {
   }, [])
   return (
     <>
+      <GlobalCss />
       <audio ref={audioRef} autoPlay loop>
         <source src="/sons/music.mp3" type="audio/mp3" />
         Seu navegador não suporta a tag de áudio.
       </audio>
-      <GlobalCss />
       <Header />
       <div className="fundo">
         <div className="container">
