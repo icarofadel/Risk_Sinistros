@@ -18,9 +18,9 @@ const Seguro = () => {
     },
     {
       id: 2,
-      nome: 'Logic Pharma Armazéns Gerais LTDA - CNPJ 03.558.055/0001-00'
+      nome: 'Logic Pharma Armazéns Gerais LTDA - CNPJ 21.372.384/0001-43'
     },
-    { id: 3, nome: 'IBL Transporte de Valores LTDA - CNPJ 03.558.055/0001-00' }
+    { id: 3, nome: 'IBL Transporte de Valores LTDA - CNPJ 26.729.300/0001-08' }
   ]
 
   const apolices: { [key: number]: string[] } = {
