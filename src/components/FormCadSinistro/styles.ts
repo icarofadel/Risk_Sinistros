@@ -26,6 +26,17 @@ export const Row = styled.div`
     display: flex;
     align-items: center;
   }
+
+  input {
+    border-radius: 8px;
+    padding: 3px;
+    text-align: center;
+  }
+
+  select {
+    border-radius: 8px;
+    padding: 3px;
+  }
 `
 
 export const TextLabel = styled.label`
