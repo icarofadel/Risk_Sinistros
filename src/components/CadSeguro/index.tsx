@@ -10,7 +10,7 @@ import {
 } from '../FormCadSinistro/styles'
 import Botao from '../Button'
 
-const SelectDinamica = () => {
+const Seguro = () => {
   const segurado = [
     {
       id: 1,
@@ -277,4 +277,4 @@ const SelectDinamica = () => {
   )
 }
 
-export default SelectDinamica
+export default Seguro
