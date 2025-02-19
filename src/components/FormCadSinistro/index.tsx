@@ -54,6 +54,7 @@ const FormSinistro = () => {
                 <option value="Extravio/Falta">Extravio/Falta</option>
                 <option value="Acidente">Acidente</option>
                 <option value="ViolacaoLacre">Violação de lacre</option>
+                <option value="PercaTemperatura">Perca de temperatura</option>
               </select>
             </S.Row>
             <S.Row>

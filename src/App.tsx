@@ -15,6 +15,7 @@ function App() {
       audioRef.current.play()
     }
   }, [])
+
   return (
     <>
       <GlobalCss />
