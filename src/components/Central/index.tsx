@@ -11,7 +11,7 @@ const Central = () => (
           <Botao type="link" to={`/CadSinistro`} title="Cadastro de sinistro">
             Cadastrar sinistro
           </Botao>
-          <Botao type="link" to={`/CadSinistro`} title="Cadastro de sinistro">
+          <Botao type="link" to={`/NcParceiro`} title="Cadastro de sinistro">
             Cadastrar NC para parceiros
           </Botao>
           <Botao type="link" to={`/CadSinistro`} title="Cadastro de sinistro">
