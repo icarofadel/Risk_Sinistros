@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  wait-time-in-ms-when-sync-empty: 3000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/SinistroTestes
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update  
+    show-sql: true
+
+application-version: 1.0
