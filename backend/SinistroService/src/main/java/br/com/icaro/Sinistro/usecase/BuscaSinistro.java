@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 
 import br.com.icaro.Sinistro.repository.ISinistroRepository;
 import br.com.icaro.Sinistro.domain.Sinistro;
-import br.com.icaro.Sinistro.repository.ISinistroRepository;
 
 @Service
 public class BuscaSinistro {
