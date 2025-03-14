@@ -32,8 +32,8 @@ public class BuscaSinistro {
 	}
 	
 	// MÉTODO (CONSULTAR SINISTRO)
-	public Optional<Sinistro> buscarPorId(String id) {
-	    return sinistroRepository.findByNotaFiscal(id);
+	public Optional<Sinistro> buscarPorId(Long id) {
+	    return sinistroRepository.findById(id);
 	}
 
 

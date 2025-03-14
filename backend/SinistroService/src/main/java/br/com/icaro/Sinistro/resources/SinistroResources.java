@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +14,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 import br.com.icaro.Sinistro.domain.Sinistro;
 import br.com.icaro.Sinistro.usecase.BuscaSinistro;
 import br.com.icaro.Sinistro.usecase.CadastroSinistro;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-
-public class SinistroResources {
 
 @RestController
 @RequestMapping(value = "/sinistro")
-public class ClienteResource {
+public class SinistroResources {
 	
 	// ATRIBUTOS
 	private BuscaSinistro buscaSinistro;
@@ -34,7 +33,7 @@ public class ClienteResource {
 	
 	// CONSTRUTOR
 	@Autowired
-	public ClienteResource(BuscaSinistro buscaSinistro,
+	public void sinistroResource(BuscaSinistro buscaSinistro,
 			CadastroSinistro cadastroSinistro) {
 		this.buscaSinistro = buscaSinistro;
 		this.cadastroSinistro = cadastroSinistro;
@@ -77,7 +76,7 @@ public class ClienteResource {
 	// BUSCAR POR ID
 	@GetMapping(value = "/{id}")
 	@Operation(summary = "Busca um sinistro pelo id")
-	public ResponseEntity<Sinistro> buscarPorId(@PathVariable(value = "id", required = true) String id) {
+	public ResponseEntity<Sinistro> buscarPorId(@PathVariable(value = "id", required = true) long id) {
 		Optional<Sinistro> sinistro = buscaSinistro.buscarPorId(id);
 	    
 	    if (sinistro.isPresent()) {
@@ -93,6 +92,4 @@ public class ClienteResource {
     public ResponseEntity<Sinistro> buscarPorNf(@PathVariable("nf") String nf) {
         return ResponseEntity.ok(buscaSinistro.buscarPorNotaFiscal(nf));
     }
-}
-	
 }

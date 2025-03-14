@@ -23,8 +23,9 @@ public class SinistroCadastroTest {
 
     private Sinistro sinistro;
 
+    // teste de cadastro
     @BeforeEach
-    void setUp() {
+    void cadastroSinistro() {
     	sinistroRepository.deleteAll();
         sinistro = new Sinistro();
         sinistro.setNotaFiscal("12345");
@@ -32,18 +33,47 @@ public class SinistroCadastroTest {
         sinistroRepository.save(sinistro);
     }
 
-    // teste de cadastrar
+    // teste de busca sinistro
     @Test
-    void findByNotaFiscal() {
-        Optional<Sinistro> foundSinistro = sinistroRepository.findByNotaFiscal("12345");
-        assertTrue(foundSinistro.isPresent());
-        assertEquals("Cliente Teste", foundSinistro.get().getNomeCliente());
+    void buscaSinistro() {
+        Optional<Sinistro> buscaSinistro = sinistroRepository.findByNotaFiscal("12345");
+        assertTrue(buscaSinistro.isPresent());
+        assertEquals("Cliente Teste", buscaSinistro.get().getNomeCliente());
     }
 
     // teste de busca (Não encontrado).
     @Test
-    void findByNotaFiscalNotFound() {
-        Optional<Sinistro> foundSinistro = sinistroRepository.findByNotaFiscal("9999");
-        assertFalse(foundSinistro.isPresent());
+    void sinistroNaoEncontrado() {
+        Optional<Sinistro> sinistroNaoEncontrado = sinistroRepository.findByNotaFiscal("9999");
+        assertFalse(sinistroNaoEncontrado.isPresent());
     }
+    
+    // Teste de atualização de sinistro
+    @Test
+    void atualizaSinistro() {
+    	Optional<Sinistro> buscaSinistro = sinistroRepository.findByNotaFiscal("12345");
+    	assertTrue(buscaSinistro.isPresent());
+    	
+    	Sinistro atualizaSinistro = buscaSinistro.get();
+    	atualizaSinistro.setNomeCliente("Samsung");
+    	sinistroRepository.save(atualizaSinistro);
+    	
+    	Optional<Sinistro> sinistroAtualizado = sinistroRepository.findByNotaFiscal("12345");
+    	
+        assertTrue(sinistroAtualizado.isPresent());
+    	assertEquals("Samsung", sinistroAtualizado.get().getNomeCliente());
+    }
+    
+    // Teste de exclusão
+    @Test
+    void deleteSinistroPorId() {
+        Sinistro foundSinistro = sinistroRepository.findByNotaFiscal("12345").get();
+        
+        sinistroRepository.deleteById(foundSinistro.getId());
+        
+        Optional<Sinistro> deletedSinistro = sinistroRepository.findById(foundSinistro.getId());
+        
+        assertFalse(deletedSinistro.isPresent());
+    }
+
 }

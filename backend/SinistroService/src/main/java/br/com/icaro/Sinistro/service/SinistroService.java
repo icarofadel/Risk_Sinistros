@@ -64,10 +64,14 @@ public class SinistroService {
                 sinistro.setStatus(novosDados.getStatus());
             }
             return sinistroRepository.save(sinistro);
-        }).orElseThrow(() -> new RuntimeException("Sinistro não encontrado"));
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado"));
+
 	}
 	
 	public void excluirSinistro(Long id) {
-		sinistroRepository.deleteById(id);
+	    if (!sinistroRepository.existsById(id)) {
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado");
+	    }
+	    sinistroRepository.deleteById(id);
 	}
 }
