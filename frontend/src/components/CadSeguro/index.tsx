@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import BuscarSinistroModal from '../BuscarSinistroModal'
+
 import {
   CampoButtons,
   CampoForm,
@@ -71,6 +73,8 @@ const Seguro = () => {
       setSelected(value)
     }
   }
+
+  const [modalAberto, setModalAberto] = useState(false)
 
   return (
     <form>
@@ -270,7 +274,17 @@ const Seguro = () => {
             <Botao type="submit" to={`/`} title="Adicionar novo sinistro">
               Adicionar novo sinistro
             </Botao>
+            <Botao
+              type="button"
+              title="Buscar Sinistro"
+              onClick={() => setModalAberto(true)}
+            >
+              Buscar Sinistro
+            </Botao>
           </CampoButtons>
+          {modalAberto && (
+            <BuscarSinistroModal fechar={() => setModalAberto(false)} />
+          )}
         </div>
       </CampoForm>
     </form>
