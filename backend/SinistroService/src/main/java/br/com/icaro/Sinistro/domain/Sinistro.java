@@ -20,7 +20,7 @@ public class Sinistro {
     private LocalDate dataOcorrencia;
     
     @Column(name = "nota_fiscal", nullable = false, unique = true)
-    private String notaFiscal;
+    private String notaFiscal; 
     
     private String nomeCliente;
     
