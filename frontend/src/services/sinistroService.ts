@@ -33,3 +33,14 @@ export const deleteSinistro = async (id: number) => {
     throw error
   }
 }
+
+// Função para buscar sinistro por ID
+export const buscarSinistro = async (query: string | number) => {
+  try {
+    const response = await axios.get(`${API_URL}/${query}`) // Passa o id diretamente na URL
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar sinistro:', error)
+    throw error
+  }
+}
