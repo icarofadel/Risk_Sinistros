@@ -11,3 +11,4 @@ import br.com.icaro.Sinistro.domain.*;
 public interface ISinistroRepository extends JpaRepository<Sinistro, Long> {
     Optional<Sinistro> findByNotaFiscal(String notaFiscal);
 }
+

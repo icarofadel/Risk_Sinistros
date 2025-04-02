@@ -39,9 +39,9 @@ public class SinistroResources {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
     
- // Buscar sinistro por Nota Fiscal (NF)
+    // Buscar sinistro por Nota Fiscal (NF)
     @GetMapping(value = "/nf/{notaFiscal}")
-    public ResponseEntity<Sinistro> buscarPorNotaFiscal(@PathVariable(value = "notaFiscal") String notaFiscal) {
+    public ResponseEntity<Sinistro> findByNotaFiscal (@PathVariable(value = "notaFiscal") String notaFiscal) {
         return sinistroService.buscarPorNotaFiscal(notaFiscal)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
