@@ -1,5 +1,7 @@
 package br.com.icaro.Sinistro.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import br.com.icaro.Sinistro.domain.Sinistro;
 import br.com.icaro.Sinistro.service.SinistroService;
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/sinistro")
 public class SinistroResources {
@@ -16,6 +19,12 @@ public class SinistroResources {
     @Autowired
     private SinistroService sinistroService;
 
+    //Listar todos os sinistros
+    @GetMapping
+    public ResponseEntity<List<Sinistro>> listarTodos() {
+        return ResponseEntity.ok(sinistroService.listarTodos());
+    }
+    
     // Cadastro de sinistro
     @PostMapping
     public ResponseEntity<Sinistro> cadastar(@RequestBody @Valid Sinistro sinistro) {
