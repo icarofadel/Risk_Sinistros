@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import Botao from '../Button'
-import { buscarSinistro } from '../../services/sinistroService'
+import { buscarSinistroPorNF } from '../../services/sinistroService'
 import * as S from './styles'
 
 const BuscarSinistroModal = ({ fechar }: { fechar: () => void }) => {
-  const [query, setQuery] = useState('')
+  const [notaFiscal, setNotaFiscal] = useState('')
   const [resultado, setResultado] = useState<any | null>(null)
   const [erro, setErro] = useState<string | null>(null)
 
@@ -12,34 +12,28 @@ const BuscarSinistroModal = ({ fechar }: { fechar: () => void }) => {
     setErro(null)
     setResultado(null)
 
-    if (!query.trim()) {
-      setErro('Digite um ID ou NF para buscar.')
+    if (!notaFiscal.trim()) {
+      setErro('Digite a Nota Fiscal para buscar.')
       return
     }
 
     try {
-      const data = await buscarSinistro(query)
+      const data = await buscarSinistroPorNF(notaFiscal)
       setResultado(data)
     } catch (error) {
       setErro('Sinistro não encontrado.')
     }
   }
 
-  const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      fechar()
-    }
-  }
-
   return (
-    <S.ModalWrapper onClick={handleOutsideClick}>
-      <S.ModalContent onClick={(e) => e.stopPropagation()}>
+    <S.ModalWrapper>
+      <S.ModalContent>
         <h2>Buscar Sinistro</h2>
         <input
           type="text"
-          placeholder="Digite o ID ou NF do sinistro"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Digite a Nota Fiscal"
+          value={notaFiscal}
+          onChange={(e) => setNotaFiscal(e.target.value)}
         />
         <div>
           <Botao type="button" title="Buscar sinistro" onClick={handleSearch}>
@@ -55,10 +49,10 @@ const BuscarSinistroModal = ({ fechar }: { fechar: () => void }) => {
           <div>
             <h3>Resultado:</h3>
             <p>
-              <strong>ID:</strong> {resultado.id}
+              <strong>ID:</strong> {resultado.idSinistro}
             </p>
             <p>
-              <strong>NF:</strong> {resultado.nf}
+              <strong>Nota Fiscal:</strong> {resultado.notaFiscal}
             </p>
             <p>
               <strong>Descrição:</strong> {resultado.descricao}

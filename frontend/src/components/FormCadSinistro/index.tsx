@@ -2,7 +2,10 @@ import { useState } from 'react'
 import * as S from './styles'
 import Botao from '../Button'
 import BuscarSinistroModal from '../BuscarSinistroModal'
-import axios from 'axios'
+import {
+  cadastrarSinistro,
+  excluirSinistro
+} from '../../services/sinistroService'
 
 const FormSinistro = () => {
   const [selected, setSelected] = useState<string | null>(null)
@@ -31,7 +34,6 @@ const FormSinistro = () => {
     manifesto: '',
     local: ''
   })
-
   const handleCheckboxChange = (value: string) => {
     setSelected((prev) => (prev === value ? null : value))
   }
@@ -44,21 +46,15 @@ const FormSinistro = () => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: name === 'idSinistro' ? (value ? Number(value) : '') : value // Converte idSinistro para número
     }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await axios.post(
-        'http://localhost:8080/sinistro',
-        formData,
-        {
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
-      console.log('Sinistro cadastrado com sucesso', response.data)
+      await cadastrarSinistro(formData) // Usa a função do service
+      console.log('Sinistro cadastrado com sucesso!')
       handleNewSinistro()
     } catch (error) {
       console.error('Erro ao cadastrar sinistro', error)
@@ -71,9 +67,7 @@ const FormSinistro = () => {
       return
     }
     try {
-      await axios.delete(
-        `http://localhost:8080/sinistro/${formData.idSinistro}`
-      )
+      await excluirSinistro(Number(formData.idSinistro)) // Usa a função do service
       console.log('Sinistro excluído com sucesso')
       handleNewSinistro()
     } catch (error) {
@@ -84,7 +78,6 @@ const FormSinistro = () => {
   const handlePrint = () => {
     window.print()
   }
-
   const handleNewSinistro = () => {
     setFormData({
       idSinistro: '',
