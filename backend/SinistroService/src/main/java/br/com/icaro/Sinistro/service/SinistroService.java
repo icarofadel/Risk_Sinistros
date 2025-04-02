@@ -29,9 +29,8 @@ public class SinistroService {
         return sinistroRepository.findById(id);
     }
     
-    public Sinistro buscarPorNotaFiscal(String notaFiscal) {
-        return sinistroRepository.findByNotaFiscal(notaFiscal)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado para a Nota Fiscal: " + notaFiscal));
+    public Optional<Sinistro> buscarPorNotaFiscal(String notaFiscal) {
+        return sinistroRepository.findByNotaFiscal(notaFiscal);
     }
     
     public Sinistro atualizarSinistro(Long id, Sinistro novosDados) {
