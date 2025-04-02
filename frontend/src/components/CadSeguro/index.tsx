@@ -283,7 +283,12 @@ const Seguro = () => {
             </Botao>
           </CampoButtons>
           {modalAberto && (
-            <BuscarSinistroModal fechar={() => setModalAberto(false)} />
+            <BuscarSinistroModal
+              fechar={() => setModalAberto(false)}
+              preencherFormulario={function (dados: any): void {
+                throw new Error('Function not implemented.')
+              }}
+            />
           )}
         </div>
       </CampoForm>

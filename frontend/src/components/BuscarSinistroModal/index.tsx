@@ -1,16 +1,20 @@
 import { useState } from 'react'
-import Botao from '../Button'
 import { buscarSinistroPorNF } from '../../services/sinistroService'
 import * as S from './styles'
+import Botao from '../Button'
 
-const BuscarSinistroModal = ({ fechar }: { fechar: () => void }) => {
+const BuscarSinistroModal = ({
+  fechar,
+  preencherFormulario
+}: {
+  fechar: () => void
+  preencherFormulario: (dados: any) => void
+}) => {
   const [notaFiscal, setNotaFiscal] = useState('')
-  const [resultado, setResultado] = useState<any | null>(null)
   const [erro, setErro] = useState<string | null>(null)
 
   const handleSearch = async () => {
     setErro(null)
-    setResultado(null)
 
     if (!notaFiscal.trim()) {
       setErro('Digite a Nota Fiscal para buscar.')
@@ -19,7 +23,8 @@ const BuscarSinistroModal = ({ fechar }: { fechar: () => void }) => {
 
     try {
       const data = await buscarSinistroPorNF(notaFiscal)
-      setResultado(data)
+      preencherFormulario(data) // Passa os dados do sinistro para o formulário
+      fechar() // Fecha o modal após buscar
     } catch (error) {
       setErro('Sinistro não encontrado.')
     }
@@ -43,22 +48,7 @@ const BuscarSinistroModal = ({ fechar }: { fechar: () => void }) => {
             Fechar busca
           </Botao>
         </div>
-
         {erro && <p style={{ color: 'red' }}>{erro}</p>}
-        {resultado && (
-          <div>
-            <h3>Resultado:</h3>
-            <p>
-              <strong>ID:</strong> {resultado.idSinistro}
-            </p>
-            <p>
-              <strong>Nota Fiscal:</strong> {resultado.notaFiscal}
-            </p>
-            <p>
-              <strong>Descrição:</strong> {resultado.descricao}
-            </p>
-          </div>
-        )}
       </S.ModalContent>
     </S.ModalWrapper>
   )
