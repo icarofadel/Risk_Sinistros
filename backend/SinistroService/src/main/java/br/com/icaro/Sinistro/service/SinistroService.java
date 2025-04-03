@@ -35,7 +35,9 @@ public class SinistroService {
     
     public Sinistro atualizarSinistro(Long id, Sinistro novosDados) {
         return sinistroRepository.findById(id).map(sinistro -> {
-            // Atualiza os campos do sinistro
+            System.out.println("Atualizando sinistro ID: " + id);
+            System.out.println("Novos dados: " + novosDados.toString());
+
             if (novosDados.getDataOcorrencia() != null) sinistro.setDataOcorrencia(novosDados.getDataOcorrencia());
             if (novosDados.getNotaFiscal() != null) sinistro.setNotaFiscal(novosDados.getNotaFiscal());
             if (novosDados.getNomeCliente() != null) sinistro.setNomeCliente(novosDados.getNomeCliente());
@@ -45,9 +47,12 @@ public class SinistroService {
             if (novosDados.getResponsavel1() != null) sinistro.setResponsavel1(novosDados.getResponsavel1());
             if (novosDados.getResponsavel2() != null) sinistro.setResponsavel2(novosDados.getResponsavel2());
             if (novosDados.getStatus() != null) sinistro.setStatus(novosDados.getStatus());
-            return sinistroRepository.save(sinistro);  // Atualiza o sinistro no banco
+
+            return sinistroRepository.save(sinistro);
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado"));
     }
+
+
     
     public void excluirSinistro(Long id) {
         if (!sinistroRepository.existsById(id)) {

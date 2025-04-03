@@ -17,9 +17,14 @@ export const buscarSinistroPorNF = async (notaFiscal: string) => {
   }
 }
 
-export const atualizarSinistro = async (formData: any) => {
-  const response = await axios.put(API_URL, formData)
-  return response.data
+export const atualizarSinistro = async (id: number, dadosAtualizados: any) => {
+  try {
+    const response = await axios.put(`${API_URL}/${id}`, dadosAtualizados)
+    return response.data
+  } catch (error) {
+    console.error('Erro ao atualizar sinistro:', error)
+    throw error
+  }
 }
 
 export const excluirSinistro = async (id: number) => {

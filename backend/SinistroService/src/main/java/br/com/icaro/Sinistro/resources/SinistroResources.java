@@ -31,12 +31,18 @@ public class SinistroResources {
         return ResponseEntity.ok(sinistroService.cadastrarSinistro(sinistro));
     }
 
-    // Busca por ID
     @GetMapping(value = "/{id}")
     public ResponseEntity<Sinistro> buscarPorId(@PathVariable(value = "id") long id) {
+        
         return sinistroService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+                .map(sinistro -> {
+                    System.out.println("Sinistro encontrado: " + sinistro);
+                    return ResponseEntity.ok(sinistro);
+                })
+                .orElseGet(() -> {
+                    System.out.println("Sinistro não encontrado para ID: " + id);
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+                });
     }
     
     // Buscar sinistro por Nota Fiscal (NF)
@@ -46,12 +52,13 @@ public class SinistroResources {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
-
-    // Atualização de sinistro
-    @PutMapping
-    public ResponseEntity<Sinistro> atualizar(@RequestBody @Valid Sinistro sinistro) {
-        return ResponseEntity.ok(sinistroService.atualizarSinistro(sinistro.getId(), sinistro));
+    
+    // Atualizar sinistro
+    @PutMapping("/{id}")
+    public ResponseEntity<Sinistro> atualizar(@PathVariable Long id, @RequestBody @Valid Sinistro sinistro) {
+        return ResponseEntity.ok(sinistroService.atualizarSinistro(id, sinistro));
     }
+
 
     // Exclusão de sinistro
     @DeleteMapping(value = "/{id}")

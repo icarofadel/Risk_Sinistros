@@ -3,6 +3,7 @@ import * as S from './styles'
 import Botao from '../Button'
 import BuscarSinistroModal from '../BuscarSinistroModal'
 import {
+  atualizarSinistro,
   cadastrarSinistro,
   excluirSinistro
 } from '../../services/sinistroService'
@@ -13,7 +14,7 @@ const FormSinistro = () => {
 
   // Dados do formulário
   const [formData, setFormData] = useState({
-    id: '',
+    id: null as number | null,
     dataOcorrencia: '',
     notaFiscal: '',
     nomeCliente: '',
@@ -75,12 +76,28 @@ const FormSinistro = () => {
     }
   }
 
+  const handleAtualizarSinistro = async () => {
+    console.log('Tentando atualizar sinistro com ID:', formData.id) // Adicione esse log
+
+    if (!formData.id || isNaN(Number(formData.id))) {
+      alert('Nenhum sinistro válido selecionado para atualizar.')
+      return
+    }
+
+    try {
+      await atualizarSinistro(Number(formData.id), formData)
+      alert('Sinistro atualizado com sucesso!')
+    } catch (error) {
+      alert('Erro ao atualizar o sinistro.')
+    }
+  }
+
   const handlePrint = () => {
     window.print()
   }
   const handleNewSinistro = () => {
     setFormData({
-      id: '',
+      id: null,
       dataOcorrencia: '',
       notaFiscal: '',
       nomeCliente: '',
@@ -144,9 +161,12 @@ const FormSinistro = () => {
               <S.TextLabel htmlFor="idSinistro">ID do Sinistro</S.TextLabel>
               <input
                 type="number"
-                name="idSinistro"
-                value={formData.id || ''}
-                onChange={handleInputChange}
+                name="id"
+                value={formData.id !== null ? formData.id : ''} // Evita NaN
+                onChange={(e) => {
+                  const valor = e.target.value ? Number(e.target.value) : null
+                  setFormData((prev) => ({ ...prev, id: valor }))
+                }}
               />
             </S.Row>
             <S.TitleSecundario>Dados do sinistro</S.TitleSecundario>
@@ -415,6 +435,15 @@ const FormSinistro = () => {
               >
                 Novo Sinistro
               </Botao>
+              {formData.id && (
+                <Botao
+                  type="button"
+                  onClick={handleAtualizarSinistro}
+                  title={'Atualizar Sinistro'}
+                >
+                  Atualizar Sinistro
+                </Botao>
+              )}
             </S.CampoButtons>
           </div>
         </S.CampoForm>
