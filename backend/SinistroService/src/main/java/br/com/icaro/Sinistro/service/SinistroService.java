@@ -35,8 +35,6 @@ public class SinistroService {
     
     public Sinistro atualizarSinistro(Long id, Sinistro novosDados) {
         return sinistroRepository.findById(id).map(sinistro -> {
-            System.out.println("Atualizando sinistro ID: " + id);
-            System.out.println("Novos dados: " + novosDados.toString());
 
             if (novosDados.getDataOcorrencia() != null) sinistro.setDataOcorrencia(novosDados.getDataOcorrencia());
             if (novosDados.getNotaFiscal() != null) sinistro.setNotaFiscal(novosDados.getNotaFiscal());
@@ -47,6 +45,14 @@ public class SinistroService {
             if (novosDados.getResponsavel1() != null) sinistro.setResponsavel1(novosDados.getResponsavel1());
             if (novosDados.getResponsavel2() != null) sinistro.setResponsavel2(novosDados.getResponsavel2());
             if (novosDados.getStatus() != null) sinistro.setStatus(novosDados.getStatus());
+            if (novosDados.getCiaAerea() != null) sinistro.setCiaAerea(novosDados.getCiaAerea());
+            if (novosDados.getMotorista() != null) sinistro.setMotorista(novosDados.getMotorista());
+            if (novosDados.getNomeCiaAerea() != null) sinistro.setNomeCiaAerea(novosDados.getNomeCiaAerea());
+            if (novosDados.getAwb() != 0) sinistro.setAwb(novosDados.getAwb());
+            if (novosDados.getNomeMotorista() != null) sinistro.setNomeMotorista(novosDados.getNomeMotorista());
+            if (novosDados.getPlacaVeiculo() != null) sinistro.setPlacaVeiculo(novosDados.getPlacaVeiculo());
+            if (novosDados.getManifesto() != null) sinistro.setManifesto(novosDados.getManifesto());
+            if (novosDados.getLocal() != null) sinistro.setLocal(novosDados.getLocal());
 
             return sinistroRepository.save(sinistro);
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado"));

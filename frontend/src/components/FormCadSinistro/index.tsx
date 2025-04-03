@@ -49,7 +49,7 @@ const FormSinistro = () => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'idSinistro' ? (value ? Number(value) : '') : value // Converte idSinistro para número
+      [name]: name === 'id' ? (value ? Number(value) : '') : value // Converte idSinistro para número
     }))
   }
 
@@ -57,10 +57,10 @@ const FormSinistro = () => {
     e.preventDefault()
     try {
       await cadastrarSinistro(formData) // Usa a função do service
-      console.log('Sinistro cadastrado com sucesso!')
+      alert('Sinistro cadastrado com sucesso!')
       handleNewSinistro()
     } catch (error) {
-      console.error('Erro ao cadastrar sinistro', error)
+      alert('Erro ao cadastrar sinistro')
     }
   }
 
@@ -71,10 +71,10 @@ const FormSinistro = () => {
     }
     try {
       await excluirSinistro(Number(formData.id)) // Usa a função do service
-      console.log('Sinistro excluído com sucesso')
+      alert('Sinistro excluído com sucesso')
       handleNewSinistro()
     } catch (error) {
-      console.error('Erro ao excluir sinistro', error)
+      alert('Erro ao excluir sinistro')
     }
   }
 
