@@ -25,11 +25,13 @@ const FormSinistro = () => {
     responsavel2: '',
     status: '',
     resumo: '',
-    ciaAerea: '',
-    motorista: '',
+    ciaAerea: false,
+    motorista: false,
     entregueFinanceiro: false,
     dataEntrega: '',
+    nomeCiaAerea: '',
     awb: '',
+    nomeMotorista: '',
     cpf: '',
     placa: '',
     manifesto: '',
@@ -108,11 +110,13 @@ const FormSinistro = () => {
       responsavel2: '',
       status: '',
       resumo: '',
-      ciaAerea: '',
-      motorista: '',
+      ciaAerea: false,
+      motorista: false,
       entregueFinanceiro: false,
       dataEntrega: '',
+      nomeCiaAerea: '',
       awb: '',
+      nomeMotorista: '',
       cpf: '',
       placa: '',
       manifesto: '',
@@ -137,7 +141,9 @@ const FormSinistro = () => {
       motorista: dados.motorista,
       entregueFinanceiro: dados.entregueFinanceiro,
       dataEntrega: dados.dataEntrega,
+      nomeCiaAerea: dados.nomeCiaAerea,
       awb: dados.awb,
+      nomeMotorista: dados.nomeMotorista,
       cpf: dados.cpf,
       placa: dados.placa,
       manifesto: dados.manifesto,
@@ -288,29 +294,42 @@ const FormSinistro = () => {
                 <input
                   type="checkbox"
                   name="ciaAerea"
-                  checked={formData.ciaAerea === 'option1'}
-                  onChange={() => handleCheckboxChange('option1')}
+                  checked={formData.ciaAerea}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      ciaAerea: e.target.checked,
+                      motorista: e.target.checked ? false : prev.motorista
+                    }))
+                  }
                 />
+
                 <S.TextLabel htmlFor="Motorista">Motorista</S.TextLabel>
                 <input
                   type="checkbox"
                   name="motorista"
-                  checked={formData.motorista === 'option2'}
-                  onChange={() => handleCheckboxChange('option2')}
+                  checked={formData.motorista}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      motorista: e.target.checked,
+                      ciaAerea: e.target.checked ? false : prev.ciaAerea
+                    }))
+                  }
                 />
               </S.Row>
 
               <div>
-                {selected === 'option1' && (
+                {formData.ciaAerea && (
                   <>
                     <S.Row>
                       <S.TextLabel htmlFor="CiaArea">
-                        Nome Cia. área
+                        Nome Cia. aérea
                       </S.TextLabel>
                       <input
                         type="text"
-                        name="ciaArea"
-                        value={formData.ciaAerea || ''}
+                        name="nomeCiaAerea"
+                        value={formData.nomeCiaAerea || ''}
                         onChange={handleInputChange}
                       />
                     </S.Row>
@@ -325,14 +344,14 @@ const FormSinistro = () => {
                     </S.Row>
                   </>
                 )}
-                {selected === 'option2' && (
+                {formData.motorista && (
                   <>
                     <S.Row>
                       <S.TextLabel htmlFor="Motorista">Motorista</S.TextLabel>
                       <input
                         type="text"
-                        name="motorista"
-                        value={formData.motorista || ''}
+                        name="nomeMotorista"
+                        value={formData.nomeMotorista || ''}
                         onChange={handleInputChange}
                       />
                     </S.Row>

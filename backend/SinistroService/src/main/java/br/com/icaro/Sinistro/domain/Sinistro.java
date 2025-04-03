@@ -36,9 +36,13 @@ public class Sinistro {
     
     private String status;
     
-    private String ciaAerea;
+    private Boolean ciaAerea;
     
-    private String motorista;
+    private Boolean motorista;
+    
+    private String nomeCiaAerea;
+    
+    private String nomeMotorista;
     
     private String cpfMotorista;
     
