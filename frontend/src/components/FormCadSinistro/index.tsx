@@ -2,7 +2,6 @@ import { useState } from 'react'
 import * as S from './styles'
 import Botao from '../Button'
 import BuscarSinistroModal from '../BuscarSinistroModal'
-import axios from 'axios'
 import {
   cadastrarSinistro,
   excluirSinistro
@@ -14,7 +13,7 @@ const FormSinistro = () => {
 
   // Dados do formulário
   const [formData, setFormData] = useState({
-    idSinistro: '',
+    id: '',
     dataOcorrencia: '',
     notaFiscal: '',
     nomeCliente: '',
@@ -63,12 +62,12 @@ const FormSinistro = () => {
   }
 
   const handleDelete = async () => {
-    if (!formData.idSinistro) {
+    if (!formData.id) {
       alert('Informe o ID do sinistro para excluir.')
       return
     }
     try {
-      await excluirSinistro(Number(formData.idSinistro)) // Usa a função do service
+      await excluirSinistro(Number(formData.id)) // Usa a função do service
       console.log('Sinistro excluído com sucesso')
       handleNewSinistro()
     } catch (error) {
@@ -81,7 +80,7 @@ const FormSinistro = () => {
   }
   const handleNewSinistro = () => {
     setFormData({
-      idSinistro: '',
+      id: '',
       dataOcorrencia: '',
       notaFiscal: '',
       nomeCliente: '',
@@ -106,7 +105,7 @@ const FormSinistro = () => {
 
   const preencherFormulario = (dados: any) => {
     setFormData({
-      idSinistro: dados.idSinistro,
+      id: dados.id,
       dataOcorrencia: dados.dataOcorrencia,
       notaFiscal: dados.notaFiscal,
       nomeCliente: dados.nomeCliente,
@@ -146,7 +145,7 @@ const FormSinistro = () => {
               <input
                 type="number"
                 name="idSinistro"
-                value={formData.idSinistro || ''}
+                value={formData.id || ''}
                 onChange={handleInputChange}
               />
             </S.Row>
