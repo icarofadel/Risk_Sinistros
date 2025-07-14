@@ -48,7 +48,7 @@ public class SinistroService {
             if (novosDados.getCiaAerea() != null) sinistro.setCiaAerea(novosDados.getCiaAerea());
             if (novosDados.getMotorista() != null) sinistro.setMotorista(novosDados.getMotorista());
             if (novosDados.getNomeCiaAerea() != null) sinistro.setNomeCiaAerea(novosDados.getNomeCiaAerea());
-            if (novosDados.getAwb() != 0) sinistro.setAwb(novosDados.getAwb());
+            if (novosDados.getAwb() != null) sinistro.setAwb(novosDados.getAwb());
             if (novosDados.getNomeMotorista() != null) sinistro.setNomeMotorista(novosDados.getNomeMotorista());
             if (novosDados.getPlacaVeiculo() != null) sinistro.setPlacaVeiculo(novosDados.getPlacaVeiculo());
             if (novosDados.getManifesto() != null) sinistro.setManifesto(novosDados.getManifesto());

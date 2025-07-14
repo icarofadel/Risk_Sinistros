@@ -42,11 +42,11 @@ public class Sinistro {
     
     private String nomeCiaAerea;
     
-    private int awb;
+    private String awb;
     
     private String nomeMotorista;
     
-    private String cpfMotorista;
+    private Long cpfMotorista;
     
     private String placaVeiculo;
     

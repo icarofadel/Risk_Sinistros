@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as S from './styles'
 import Botao from '../Button'
 import BuscarSinistroModal from '../BuscarSinistroModal'
@@ -37,6 +37,7 @@ const FormSinistro = () => {
     manifesto: '',
     local: ''
   })
+
   const handleCheckboxChange = (value: string) => {
     setSelected((prev) => (prev === value ? null : value))
   }
@@ -79,8 +80,6 @@ const FormSinistro = () => {
   }
 
   const handleAtualizarSinistro = async () => {
-    console.log('Tentando atualizar sinistro com ID:', formData.id) // Adicione esse log
-
     if (!formData.id || isNaN(Number(formData.id))) {
       alert('Nenhum sinistro válido selecionado para atualizar.')
       return
@@ -150,6 +149,38 @@ const FormSinistro = () => {
       local: dados.local
     })
   }
+
+  const [sinistroBuscado, setSinistroBuscado] = useState<
+    typeof formData | null
+  >(null)
+
+  useEffect(() => {
+    if (sinistroBuscado) {
+      setFormData((prev) => ({
+        ...prev,
+        ...sinistroBuscado,
+        ciaAerea: !!sinistroBuscado.ciaAerea,
+        motorista: !!sinistroBuscado.motorista
+      }))
+
+      // Se ambos vierem como true, corrige para manter apenas um ativo
+      if (sinistroBuscado.ciaAerea && sinistroBuscado.motorista) {
+        setFormData((prev) => ({
+          ...prev,
+          motorista: false // Mantém apenas `ciaAerea` como true
+        }))
+      }
+
+      // Define "selected" corretamente
+      if (sinistroBuscado.ciaAerea) {
+        setSelected('option1')
+      } else if (sinistroBuscado.motorista) {
+        setSelected('option2')
+      } else {
+        setSelected(null)
+      }
+    }
+  }, [sinistroBuscado])
 
   return (
     <div>
@@ -277,7 +308,7 @@ const FormSinistro = () => {
             </div>
             <S.TitleSecundario>Andamento</S.TitleSecundario>
             <div>
-              <S.Row className="resumo">
+              <S.Row className="status">
                 <S.TextLabel htmlFor="Status">Status</S.TextLabel>
                 <textarea
                   name="status"

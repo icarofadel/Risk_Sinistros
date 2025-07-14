@@ -22,7 +22,7 @@ export const TitleSecundario = styled.span`
 export const Row = styled.div`
   margin: 16px 0;
 
-  &.resumo {
+  &.status {
     display: flex;
     align-items: center;
   }
