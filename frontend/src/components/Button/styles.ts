@@ -29,4 +29,8 @@ export const ButtonLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   border: none;
+
+  &.botaoFechar {
+    background-color: red;
+  }
 `

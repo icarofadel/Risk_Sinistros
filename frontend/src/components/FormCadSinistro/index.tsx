@@ -468,29 +468,6 @@ const FormSinistro = () => {
               </S.Row>
             </div>{' '}
             <S.CampoButtons>
-              <Botao type="link" to={`/`} title="Fechar sinistro">
-                Fechar sinistro
-              </Botao>
-              <Botao
-                type="button"
-                title="Excluir sinistro"
-                onClick={handleDelete}
-              >
-                Excluir Sinistro
-              </Botao>
-              <Botao type="submit" title="Salvar">
-                Salvar
-              </Botao>
-              <Botao
-                type="button"
-                title="Buscar Sinistro"
-                onClick={() => setModalAberto(true)}
-              >
-                Buscar Sinistro
-              </Botao>
-              <Botao type="button" title="Imprimir" onClick={handlePrint}>
-                Imprimir
-              </Botao>
               <Botao
                 type="button"
                 title="Novo Sinistro"
@@ -498,6 +475,7 @@ const FormSinistro = () => {
               >
                 Novo Sinistro
               </Botao>
+
               {formData.id && (
                 <Botao
                   type="button"
@@ -507,6 +485,40 @@ const FormSinistro = () => {
                   Atualizar Sinistro
                 </Botao>
               )}
+
+              <Botao
+                type="button"
+                title="Buscar Sinistro"
+                onClick={() => setModalAberto(true)}
+              >
+                Buscar Sinistro
+              </Botao>
+
+              <Botao type="submit" title="Salvar">
+                Salvar
+              </Botao>
+
+              <Botao type="button" title="Imprimir" onClick={handlePrint}>
+                Imprimir
+              </Botao>
+
+              <Botao
+                type="button"
+                title="Excluir sinistro"
+                onClick={handleDelete}
+                className="botaoFechar"
+              >
+                Excluir Sinistro
+              </Botao>
+
+              <Botao
+                type="link"
+                to={`/`}
+                title="Fechar sinistro"
+                className="botaoFechar"
+              >
+                Fechar sinistro
+              </Botao>
             </S.CampoButtons>
           </div>
         </S.CampoForm>
