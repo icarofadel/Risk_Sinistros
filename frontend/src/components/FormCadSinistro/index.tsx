@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { NumericFormat } from 'react-number-format'
 import * as S from './styles'
 import Botao from '../Button'
 import BuscarSinistroModal from '../BuscarSinistroModal'
@@ -20,7 +21,7 @@ const FormSinistro = () => {
     nomeCliente: '',
     segmento: '',
     motivo: '',
-    valorSinistro: '',
+    valorSinistro: null as number | null,
     responsavel1: '',
     responsavel2: '',
     status: '',
@@ -104,7 +105,7 @@ const FormSinistro = () => {
       nomeCliente: '',
       segmento: '',
       motivo: '',
-      valorSinistro: '',
+      valorSinistro: null as number | null,
       responsavel1: '',
       responsavel2: '',
       status: '',
@@ -270,11 +271,23 @@ const FormSinistro = () => {
                 <S.TextLabel htmlFor="ValorSinistro">
                   Valor do sinistro
                 </S.TextLabel>
-                <input
-                  type="number"
+                <NumericFormat
                   name="valorSinistro"
-                  value={formData.valorSinistro || ''}
-                  onChange={handleInputChange}
+                  value={formData.valorSinistro}
+                  thousandSeparator="."
+                  decimalSeparator=","
+                  prefix="R$ "
+                  decimalScale={2}
+                  fixedDecimalScale
+                  allowNegative={false}
+                  onValueChange={(values) => {
+                    const { floatValue } = values
+                    setFormData((prev) => ({
+                      ...prev,
+                      valorSinistro: floatValue ?? null
+                    }))
+                  }}
+                  placeholder="R$ 0,00"
                 />
               </S.Row>
             </div>

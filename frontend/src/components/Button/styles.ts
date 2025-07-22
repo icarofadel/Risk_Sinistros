@@ -13,6 +13,10 @@ export const Buttons = styled.button`
   border-radius: 16px;
   cursor: pointer;
   border: none;
+
+  &.botaoFechar {
+    background-color: red;
+  }
 `
 export const ButtonLink = styled(Link)`
   background-color: ${cores.color};

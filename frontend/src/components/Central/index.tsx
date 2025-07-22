@@ -1,3 +1,4 @@
+import BuscarSinistroModal from '../BuscarSinistroModal'
 import Botao from '../Button'
 import * as S from './styles'
 
@@ -39,8 +40,12 @@ const Central = () => (
     <h3>Relatórios</h3>
     <S.ContainerRelatorio>
       <div>
-        <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
-          Consultar sinistro
+        <Botao
+          type="button"
+          title="Buscar Sinistro"
+          onClick={() => BuscarSinistroModal}
+        >
+          Buscar Sinistro
         </Botao>
         <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
           Consultar NC para parceiros

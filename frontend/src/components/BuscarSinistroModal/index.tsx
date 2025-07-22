@@ -44,7 +44,12 @@ const BuscarSinistroModal = ({
           <Botao type="button" title="Buscar sinistro" onClick={handleSearch}>
             Buscar
           </Botao>
-          <Botao onClick={fechar} type="button" title="Fechar busca">
+          <Botao
+            onClick={fechar}
+            type="button"
+            title="Fechar busca"
+            className="botaoFechar"
+          >
             Fechar busca
           </Botao>
         </div>
