@@ -19,7 +19,7 @@ public class SinistroParceiro {
 	
 	private LocalDate dataOcorrencia;
 	
-	@Column(name = "ntoa_fiscal", nullable = false, unique = true)
+	@Column(name = "nota_fiscal", nullable = false, unique = true)
 	private String notaFiscal;
 	
 	private String nomeCliente;
