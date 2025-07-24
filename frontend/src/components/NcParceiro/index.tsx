@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { NumericFormat } from 'react-number-format'
 import {
   CampoButtons,
   CampoForm,
@@ -8,88 +10,191 @@ import {
 } from '../FormCadSinistro/styles'
 import Botao from '../Button'
 
-const NcParceiros = () => (
-  <form>
-    <CampoForm>
-      <div>
-        <Title>Cadastro de NC para Parceiro</Title>
-        <Row>
-          <TextLabel htmlFor="NcParceiro">NC Parceiro</TextLabel>
-          <input type="number" />
-        </Row>
+const NcParceiros = () => {
+  const [formData, setFormData] = useState({
+    ncParceiro: '',
+    notaFiscal: '',
+    nomeCliente: '',
+    motivo: 'Avaria',
+    valorSinistro: null as number | null,
+    sacador: 'IBL',
+    sacado: '',
+    envioControladoria: '',
+    numeroFatura: ''
+  })
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log('Enviando dados:', formData)
+    alert('Formulário enviado (a implementar)')
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <CampoForm>
         <div>
+          <Title>Cadastro de NC para Parceiro</Title>
+
           <Row>
-            <TextLabel htmlFor="NF">Nota Fiscal</TextLabel>
-            <input type="number" />
+            <TextLabel htmlFor="ncParceiro">NC Parceiro</TextLabel>
+            <input
+              type="number"
+              name="ncParceiro"
+              id="ncParceiro"
+              value={formData.ncParceiro}
+              onChange={handleInputChange}
+            />
           </Row>
+
           <Row>
-            <TextLabel htmlFor="NomeCliente">Nome do cliente</TextLabel>
-            <input type="text" />
+            <TextLabel htmlFor="notaFiscal">Nota Fiscal</TextLabel>
+            <input
+              type="number"
+              name="notaFiscal"
+              id="notaFiscal"
+              value={formData.notaFiscal}
+              onChange={handleInputChange}
+            />
           </Row>
+
           <Row>
-            <TextLabel htmlFor="Motivo">Motivo</TextLabel>
-            <select name="Motivo" id="Motivo">
+            <TextLabel htmlFor="nomeCliente">Nome do cliente</TextLabel>
+            <input
+              type="text"
+              name="nomeCliente"
+              id="nomeCliente"
+              value={formData.nomeCliente}
+              onChange={handleInputChange}
+            />
+          </Row>
+
+          <Row>
+            <TextLabel htmlFor="motivo">Motivo</TextLabel>
+            <select
+              name="motivo"
+              id="motivo"
+              value={formData.motivo}
+              onChange={handleInputChange}
+            >
               <option value="Avaria">Avaria</option>
               <option value="Roubo">Roubo</option>
               <option value="Extravio/Falta">Extravio/Falta</option>
               <option value="Acidente">Acidente</option>
               <option value="ViolacaoLacre">Violação de lacre</option>
               <option value="QuebraProcedimento">Quebra de procedimento</option>
-              <option value="PercaTemperatura">Perca de temperatura</option>
+              <option value="PercaTemperatura">Perda de temperatura</option>
             </select>
           </Row>
+
           <Row>
-            <TextLabel htmlFor="ValorSinistro">Valor do sinistro</TextLabel>
-            <input type="" />
+            <TextLabel htmlFor="valorSinistro">Valor do sinistro</TextLabel>
+            <NumericFormat
+              id="valorSinistro"
+              name="valorSinistro"
+              value={formData.valorSinistro ?? ''}
+              thousandSeparator="."
+              decimalSeparator=","
+              prefix="R$ "
+              decimalScale={2}
+              fixedDecimalScale
+              allowNegative={false}
+              onValueChange={(values) => {
+                const { floatValue } = values
+                setFormData((prev) => ({
+                  ...prev,
+                  valorSinistro: floatValue ?? null
+                }))
+              }}
+              placeholder="R$ 0,00"
+            />
           </Row>
-        </div>
-        <TitleSecundario>Empresa do grupo</TitleSecundario>
-        <div>
+
+          <TitleSecundario>Empresa do grupo</TitleSecundario>
+
           <Row>
-            <TextLabel htmlFor="Sacador">Sacador</TextLabel>
-            <select name="sacado" id="sacado">
+            <TextLabel htmlFor="sacador">Sacador</TextLabel>
+            <select
+              name="sacador"
+              id="sacador"
+              value={formData.sacador}
+              onChange={handleInputChange}
+            >
               <option value="IBL">Intermodal Brasíl Logística LTDA</option>
               <option value="Logic">Logic Pharma Armazéns Gerais LTDA</option>
               <option value="IBLValores">IBL Transporte de Valores LTDA</option>
             </select>
           </Row>
-          <Row>
-            <TextLabel htmlFor="Sacador">Sacado</TextLabel>
-            <input type="text" />
-          </Row>
-        </div>
-        <TitleSecundario>Finalização</TitleSecundario>
-        <div>
-          <Row className="Finalizacao">
-            <TextLabel htmlFor="">Envio para a controladoria</TextLabel>
-            <input type="date" />
-          </Row>
-          <Row className="Fatura">
-            <TextLabel htmlFor="">Nº da Fatura</TextLabel>
-            <input type="text" />
-          </Row>
-        </div>
 
-        <CampoButtons>
-          <Botao type="link" to={`/`} title="Fechar sinistro">
-            Fechar sinistro
-          </Botao>
-          <Botao type="submit" to={`/`} title="Excluir sinistro">
-            Excluir Sinistro
-          </Botao>
-          <Botao type="submit" to={`/`} title="Imprimir sinistro">
-            Imprimir Sinistro
-          </Botao>
-          <Botao type="submit" to={`/`} title="Salvar">
-            Salvar
-          </Botao>
-          <Botao type="submit" to={`/`} title="Adicionar novo sinistro">
-            Adicionar novo sinistro
-          </Botao>
-        </CampoButtons>
-      </div>
-    </CampoForm>
-  </form>
-)
+          <Row>
+            <TextLabel htmlFor="sacado">Sacado</TextLabel>
+            <input
+              type="text"
+              name="sacado"
+              id="sacado"
+              value={formData.sacado}
+              onChange={handleInputChange}
+            />
+          </Row>
+
+          <TitleSecundario>Finalização</TitleSecundario>
+
+          <Row className="Finalizacao">
+            <TextLabel htmlFor="envioControladoria">
+              Envio para a controladoria
+            </TextLabel>
+            <input
+              type="date"
+              name="envioControladoria"
+              id="envioControladoria"
+              value={formData.envioControladoria}
+              onChange={handleInputChange}
+            />
+          </Row>
+
+          <Row className="Fatura">
+            <TextLabel htmlFor="numeroFatura">Nº da Fatura</TextLabel>
+            <input
+              type="text"
+              name="numeroFatura"
+              id="numeroFatura"
+              value={formData.numeroFatura}
+              onChange={handleInputChange}
+            />
+          </Row>
+
+          <CampoButtons>
+            <Botao type="button" title="Fechar sinistro" to="/">
+              Fechar sinistro
+            </Botao>
+            <Botao type="button" title="Excluir sinistro" to="/">
+              Excluir Sinistro
+            </Botao>
+            <Botao type="button" title="Imprimir sinistro" to="/">
+              Imprimir Sinistro
+            </Botao>
+            <Botao type="submit" title="Salvar">
+              Salvar
+            </Botao>
+            <Botao type="button" title="Adicionar novo sinistro" to="/">
+              Adicionar novo sinistro
+            </Botao>
+          </CampoButtons>
+        </div>
+      </CampoForm>
+    </form>
+  )
+}
 
 export default NcParceiros
