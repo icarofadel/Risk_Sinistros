@@ -7,7 +7,7 @@ export const cadastrarSinistro = async (formData: any) => {
   return response.data
 }
 
-export const buscarSinistroPorNF = async (notaFiscal: string) => {
+export const buscarSinistroParceiroPorNF = async (notaFiscal: string) => {
   try {
     const response = await axios.get(`${API_URL}/nf/${notaFiscal}`)
     return response.data

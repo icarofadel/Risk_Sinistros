@@ -1,30 +1,35 @@
 import { useState } from 'react'
-import { buscarSinistroPorNF } from '../../services/sinistroService'
 import * as S from './styles'
 import Botao from '../Button'
 
-const BuscarSinistroModal = ({
+interface BuscarSinistroModalProps {
+  fechar: () => void
+  preencherFormulario: (dados: any) => void
+  buscarPorNF: (nf: string) => Promise<any> // generalizado
+}
+export const BuscarSinistroModal = ({
   fechar,
-  preencherFormulario
+  preencherFormulario,
+  service
 }: {
   fechar: () => void
   preencherFormulario: (dados: any) => void
+  service: (notaFiscal: string) => Promise<any>
 }) => {
   const [notaFiscal, setNotaFiscal] = useState('')
   const [erro, setErro] = useState<string | null>(null)
 
   const handleSearch = async () => {
     setErro(null)
-
     if (!notaFiscal.trim()) {
       setErro('Digite a Nota Fiscal para buscar.')
       return
     }
 
     try {
-      const data = await buscarSinistroPorNF(notaFiscal)
-      preencherFormulario(data) // Passa os dados do sinistro para o formulário
-      fechar() // Fecha o modal após buscar
+      const data = await service(notaFiscal) // <-- usando o service genérico
+      preencherFormulario(data)
+      fechar()
     } catch (error) {
       setErro('Sinistro não encontrado.')
     }
@@ -58,5 +63,3 @@ const BuscarSinistroModal = ({
     </S.ModalWrapper>
   )
 }
-
-export default BuscarSinistroModal

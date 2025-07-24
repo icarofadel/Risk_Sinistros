@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import BuscarSinistroModal from '../BuscarSinistroModal'
-
 import {
   CampoButtons,
   CampoForm,
@@ -11,6 +9,8 @@ import {
   TitleSecundario
 } from '../FormCadSinistro/styles'
 import Botao from '../Button'
+import { BuscarSinistroModal } from '../BuscarSinistroModal'
+import { buscarSinistroPorNF } from '../../services/sinistroService'
 
 const Seguro = () => {
   const segurado = [
@@ -75,6 +75,10 @@ const Seguro = () => {
   }
 
   const [modalAberto, setModalAberto] = useState(false)
+
+  function preencherFormulario(dados: any): void {
+    throw new Error('Function not implemented.')
+  }
 
   return (
     <form>
@@ -285,9 +289,8 @@ const Seguro = () => {
           {modalAberto && (
             <BuscarSinistroModal
               fechar={() => setModalAberto(false)}
-              preencherFormulario={function (dados: any): void {
-                throw new Error('Function not implemented.')
-              }}
+              preencherFormulario={preencherFormulario}
+              service={buscarSinistroPorNF} // <-- injeta a função do seu service parceiro
             />
           )}
         </div>

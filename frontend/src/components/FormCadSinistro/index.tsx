@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { NumericFormat } from 'react-number-format'
 import * as S from './styles'
 import Botao from '../Button'
-import BuscarSinistroModal from '../BuscarSinistroModal'
 import {
   atualizarSinistro,
+  buscarSinistroPorNF,
   cadastrarSinistro,
   excluirSinistro
 } from '../../services/sinistroService'
+import { BuscarSinistroModal } from '../BuscarSinistroModal'
 
 const FormSinistro = () => {
   const [selected, setSelected] = useState<string | null>(null)
@@ -97,6 +98,7 @@ const FormSinistro = () => {
   const handlePrint = () => {
     window.print()
   }
+
   const handleNewSinistro = () => {
     setFormData({
       id: null,
@@ -189,6 +191,7 @@ const FormSinistro = () => {
         <BuscarSinistroModal
           fechar={() => setModalAberto(false)}
           preencherFormulario={preencherFormulario}
+          service={buscarSinistroPorNF} // <-- injeta a função do seu service parceiro
         />
       )}
       <form onSubmit={handleSubmit}>
