@@ -175,20 +175,30 @@ const NcParceiros = () => {
           </Row>
 
           <CampoButtons>
-            <Botao type="button" title="Fechar sinistro" to="/">
-              Fechar sinistro
-            </Botao>
-            <Botao type="button" title="Excluir sinistro" to="/">
-              Excluir Sinistro
-            </Botao>
-            <Botao type="button" title="Imprimir sinistro" to="/">
-              Imprimir Sinistro
+            <Botao type="button" title="Adicionar novo sinistro" to="/">
+              Adicionar novo sinistro
             </Botao>
             <Botao type="submit" title="Salvar">
               Salvar
             </Botao>
-            <Botao type="button" title="Adicionar novo sinistro" to="/">
-              Adicionar novo sinistro
+            <Botao type="button" title="Imprimir sinistro" to="/">
+              Imprimir Sinistro
+            </Botao>
+            <Botao
+              type="button"
+              title="Excluir sinistro"
+              to="/"
+              className="botaoFechar"
+            >
+              Excluir Sinistro
+            </Botao>
+            <Botao
+              type="link"
+              title="Fechar sinistro"
+              to={`/`}
+              className="botaoFechar"
+            >
+              Fechar sinistro
             </Botao>
           </CampoButtons>
         </div>
