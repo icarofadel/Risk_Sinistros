@@ -15,13 +15,14 @@ import {
   atualizarSinistro,
   excluirSinistro,
   buscarSinistroParceiroPorNF
-} from '../../services/sinistroParceiroService' // ajuste o caminho conforme seu projeto
+} from '../../services/sinistroParceiroService'
 import { BuscarSinistroModal } from '../BuscarSinistroModal'
 
 const NcParceiros = () => {
   const [modalAberto, setModalAberto] = useState(false)
   const [formData, setFormData] = useState({
     ncParceiro: '',
+    dataOcorrencia: '',
     notaFiscal: '',
     nomeCliente: '',
     motivo: 'Avaria',
@@ -89,6 +90,7 @@ const NcParceiros = () => {
   const limparFormulario = () => {
     setFormData({
       ncParceiro: '',
+      dataOcorrencia: '',
       notaFiscal: '',
       nomeCliente: '',
       motivo: 'Avaria',
@@ -108,6 +110,7 @@ const NcParceiros = () => {
   const handleNewSinistro = () => {
     setFormData({
       ncParceiro: '',
+      dataOcorrencia: '',
       notaFiscal: '',
       nomeCliente: '',
       motivo: '',
@@ -122,6 +125,7 @@ const NcParceiros = () => {
   const preencherFormulario = (dados: any) => {
     setFormData({
       ncParceiro: dados.id,
+      dataOcorrencia: dados.dataOcorrencia,
       notaFiscal: dados.notaFiscal,
       nomeCliente: dados.nomeCliente,
       motivo: dados.motivo,
@@ -153,6 +157,16 @@ const NcParceiros = () => {
                 name="ncParceiro"
                 id="ncParceiro"
                 value={formData.ncParceiro}
+                onChange={handleInputChange}
+              />
+            </Row>
+            <Row>
+              <TextLabel htmlFor="dataOcorrencia">Data da ocorrência</TextLabel>
+              <input
+                type="date"
+                name="dataOcorrencia"
+                id="dataOcorrencia"
+                value={formData.dataOcorrencia || ''}
                 onChange={handleInputChange}
               />
             </Row>
@@ -277,7 +291,11 @@ const NcParceiros = () => {
             </Row>
 
             <CampoButtons>
-              <Botao type="button" title="Adicionar novo sinistro" to="/">
+              <Botao
+                type="button"
+                title="Adicionar novo sinistro"
+                onClick={handleNewSinistro}
+              >
                 Adicionar novo sinistro
               </Botao>
 
