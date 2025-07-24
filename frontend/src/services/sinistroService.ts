@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8080/sinistro'
+const API_URL = 'http://localhost:8082/sinistro'
 
 export const cadastrarSinistro = async (formData: any) => {
   const response = await axios.post(API_URL, formData)
