@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "sinistros_seguradora")
@@ -21,6 +22,7 @@ public class SinistroSeguradora {
 	
 	private String segurado;
 	
+	@JsonProperty("nApolice")
 	private String nApolice;
 	
 	@Column(name = "nota_fiscal", nullable = false, unique = true)
@@ -38,7 +40,7 @@ public class SinistroSeguradora {
 	
 	private Double estimativaPrejuizo;
 	
-	private String Natureza;
+	private String natureza;
 	
 	private LocalDate dataOcorrencia;
 	
@@ -64,13 +66,13 @@ public class SinistroSeguradora {
 	
 	private String motorista;
 	
-	private Number cpf;
+	private String cpf;
 	
 	private String placa;
 	
 	private Number manifesto;
 	
-	private String Local;
+	private String local;
 	
 	private String status;
 	

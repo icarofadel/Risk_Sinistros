@@ -70,7 +70,7 @@ const Seguro = () => {
     valorEmbarcado: null as number | null,
     valorNf: null as number | null,
     estimativaPrejuizo: null as number | null,
-    Natureza: '',
+    natureza: '',
     dataOcorrencia: '',
     resumo: '',
     pagador: '',
@@ -86,9 +86,28 @@ const Seguro = () => {
     cpf: '',
     placa: '',
     manifesto: '',
-    Local: '',
+    local: '',
     status: ''
   })
+
+  const prepararDadosParaEnvio = (data: any) => {
+    const seguradoSelecionado = segurado.find(
+      (s) => s.id === Number(data.segurado)
+    )
+
+    return {
+      ...data,
+      segurado: seguradoSelecionado?.nome || '',
+      cpf: data.cpf ? Number(data.cpf.replace(/\D/g, '')) : null,
+      manifesto: data.manifesto ? Number(data.manifesto) : null,
+      valorEmbarcado: data.valorEmbarcado ? Number(data.valorEmbarcado) : null,
+      valorNf: data.valorNf ? Number(data.valorNf) : null,
+      estimativaPrejuizo: data.estimativaPrejuizo
+        ? Number(data.estimativaPrejuizo)
+        : null,
+      dataOcorrencia: data.dataOcorrencia || null
+    }
+  }
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -110,12 +129,13 @@ const Seguro = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const dados = prepararDadosParaEnvio(formData)
-      await cadastrarSinistro(dados)
-      alert('Sinistro enviado com sucesso!')
+      const dadosTratados = prepararDadosParaEnvio(formData)
+      console.log('Dados tratados para envio:', dadosTratados) // <-- aqui!
+      await cadastrarSinistro(dadosTratados)
+      alert('Sinistro cadastrado com sucesso!')
+      handleNewSinistro()
     } catch (error) {
-      console.error(error)
-      alert('Erro ao enviar sinistro.')
+      alert('Erro ao cadastrar sinistro')
     }
   }
 
@@ -201,7 +221,7 @@ const Seguro = () => {
       valorEmbarcado: '',
       valorNf: '',
       estimativaPrejuizo: '',
-      Natureza: '',
+      natureza: '',
       dataOcorrencia: '',
       resumo: '',
       pagador: '',
@@ -217,23 +237,9 @@ const Seguro = () => {
       cpf: '',
       placa: '',
       manifesto: '',
-      Local: '',
+      local: '',
       status: ''
     })
-  }
-
-  const prepararDadosParaEnvio = (data: any) => {
-    return {
-      ...data,
-      cpf: data.cpf ? Number(data.cpf.replace(/\D/g, '')) : null,
-      manifesto: data.manifesto ? Number(data.manifesto) : null,
-      valorEmbarcado: data.valorEmbarcado ? Number(data.valorEmbarcado) : null,
-      valorNf: data.valorNf ? Number(data.valorNf) : null,
-      estimativaPrejuizo: data.estimativaPrejuizo
-        ? Number(data.estimativaPrejuizo)
-        : null,
-      dataOcorrencia: data.dataOcorrencia || null
-    }
   }
 
   return (
@@ -388,11 +394,11 @@ const Seguro = () => {
             />
           </Row>
           <Row>
-            <TextLabel htmlFor="Natureza">Natureza</TextLabel>
+            <TextLabel htmlFor="natureza">Natureza</TextLabel>
             <input
               type="text"
-              name="Natureza"
-              value={formData.Natureza}
+              name="natureza"
+              value={formData.natureza}
               onChange={handleInputChange}
             />
           </Row>
@@ -541,11 +547,11 @@ const Seguro = () => {
                 />
               </Row>
               <Row>
-                <TextLabel htmlFor="Local">Local</TextLabel>
+                <TextLabel htmlFor="local">Local</TextLabel>
                 <input
                   type="text"
-                  name="Local"
-                  value={formData.Local}
+                  name="local"
+                  value={formData.local}
                   onChange={handleInputChange}
                 />
               </Row>
