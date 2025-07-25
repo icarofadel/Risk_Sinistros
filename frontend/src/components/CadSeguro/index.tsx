@@ -199,14 +199,18 @@ const Seguro = () => {
     if (!confirmar) return
 
     try {
-      const id = formData.id // certifique-se de ter o ID armazenado
+      const id = formData.id
       await excluirSinistro(id)
       alert('Sinistro excluído com sucesso!')
-      setFormData({}) // limpa o form, se quiser
+      setFormData({})
     } catch (error) {
       console.error(error)
       alert('Erro ao excluir sinistro.')
     }
+  }
+
+  const handlePrint = () => {
+    window.print()
   }
 
   const handleNewSinistro = () => {
@@ -598,6 +602,10 @@ const Seguro = () => {
               </Botao>
             )}
 
+            <Botao type="submit" title="Salvar">
+              Salvar
+            </Botao>
+
             <Botao
               type="button"
               title="Buscar Sinistro"
@@ -606,15 +614,28 @@ const Seguro = () => {
               Buscar Sinistro
             </Botao>
 
-            <Botao type="submit" title="Salvar">
-              Salvar
+            <Botao
+              type="button"
+              title="Imprimir sinistro"
+              onClick={handlePrint}
+            >
+              Imprimir Sinistro
+            </Botao>
+            <Botao
+              type="button"
+              title="Excluir sinistro"
+              onClick={handleExcluirSinistro}
+              className="botaoFechar"
+            >
+              Excluir Sinistro
             </Botao>
 
-            <Botao type="link" to={`/`} title="Fechar sinistro">
-              Fechar sinistro
-            </Botao>
-
-            <Botao type="link" to={`/`} title="Fechar sinistro">
+            <Botao
+              type="link"
+              title="Fechar sinistro"
+              to={`/`}
+              className="botaoFechar"
+            >
               Fechar sinistro
             </Botao>
           </CampoButtons>
