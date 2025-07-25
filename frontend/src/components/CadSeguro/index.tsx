@@ -32,7 +32,7 @@ const Seguro = () => {
     { id: 3, nome: 'IBL Transporte de Valores LTDA - CNPJ 26.729.300/0001-08' }
   ]
 
-  const apolices: { [key: number]: string[] } = {
+  const nApolices: { [key: number]: string[] } = {
     1: [
       'RCTA-C - 5201000243 - 2022 x 2024',
       'RCTR-C - 5400039845 - 2022 x 2024',
@@ -60,17 +60,17 @@ const Seguro = () => {
   }
 
   const [formData, setFormData] = useState<any>({
-    numeroProcesso: '',
-    seguradoId: '',
-    apolice: '',
+    procSeguradora: '',
+    segurado: '',
+    nApolice: '',
     notaFiscal: '',
     conhecimento: '',
     nomeCliente: '',
     tipoMercadoria: '',
     valorEmbarcado: null as number | null,
-    valorNF: null as number | null,
+    valorNf: null as number | null,
     estimativaPrejuizo: null as number | null,
-    natureza: '',
+    Natureza: '',
     dataOcorrencia: '',
     resumo: '',
     pagador: '',
@@ -86,7 +86,7 @@ const Seguro = () => {
     cpf: '',
     placa: '',
     manifesto: '',
-    local: '',
+    Local: '',
     status: ''
   })
 
@@ -110,7 +110,8 @@ const Seguro = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await cadastrarSinistro(formData)
+      const dados = prepararDadosParaEnvio(formData)
+      await cadastrarSinistro(dados)
       alert('Sinistro enviado com sucesso!')
     } catch (error) {
       console.error(error)
@@ -119,17 +120,17 @@ const Seguro = () => {
   }
 
   const [selectedSegurado, setSelectedSegurado] = useState<number | string>('')
-  const [filteredApolices, setFilteredApolices] = useState<string[]>([])
+  const [filterednApolices, setFilterednApolices] = useState<string[]>([])
 
   const handleSeguradoChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const seguradoId = Number(event.target.value)
-    setSelectedSegurado(seguradoId)
-    setFilteredApolices(apolices[seguradoId] || [])
+    const segurado = Number(event.target.value)
+    setSelectedSegurado(segurado)
+    setFilterednApolices(nApolices[segurado] || [])
     setFormData((prev: any) => ({
       ...prev,
-      seguradoId
+      segurado
     }))
   }
 
@@ -161,8 +162,9 @@ const Seguro = () => {
 
   const handleAtualizarSinistro = async () => {
     try {
-      const id = formData.id // ou de outro lugar onde você armazena o ID
-      await atualizarSinistro(id, formData)
+      const id = formData.id
+      const dados = prepararDadosParaEnvio(formData)
+      await atualizarSinistro(id, dados)
       alert('Sinistro atualizado com sucesso!')
     } catch (error) {
       console.error(error)
@@ -189,17 +191,17 @@ const Seguro = () => {
 
   const handleNewSinistro = () => {
     setFormData({
-      numeroProcesso: '',
-      seguradoId: '',
-      apolice: '',
+      procSeguradora: '',
+      segurado: '',
+      nApolice: '',
       notaFiscal: '',
       conhecimento: '',
       nomeCliente: '',
       tipoMercadoria: '',
       valorEmbarcado: '',
-      valorNF: '',
+      valorNf: '',
       estimativaPrejuizo: '',
-      natureza: '',
+      Natureza: '',
       dataOcorrencia: '',
       resumo: '',
       pagador: '',
@@ -215,9 +217,23 @@ const Seguro = () => {
       cpf: '',
       placa: '',
       manifesto: '',
-      local: '',
+      Local: '',
       status: ''
     })
+  }
+
+  const prepararDadosParaEnvio = (data: any) => {
+    return {
+      ...data,
+      cpf: data.cpf ? Number(data.cpf.replace(/\D/g, '')) : null,
+      manifesto: data.manifesto ? Number(data.manifesto) : null,
+      valorEmbarcado: data.valorEmbarcado ? Number(data.valorEmbarcado) : null,
+      valorNf: data.valorNf ? Number(data.valorNf) : null,
+      estimativaPrejuizo: data.estimativaPrejuizo
+        ? Number(data.estimativaPrejuizo)
+        : null,
+      dataOcorrencia: data.dataOcorrencia || null
+    }
   }
 
   return (
@@ -226,23 +242,23 @@ const Seguro = () => {
         <div>
           <Title>Cadastro sinistro no seguro</Title>
           <Row>
-            <TextLabel htmlFor="numeroProcesso">
+            <TextLabel htmlFor="procSeguradora">
               Nº Processo seguradora
             </TextLabel>
             <input
-              type="number"
-              name="numeroProcesso"
-              value={formData.numeroProcesso}
+              type="text"
+              name="procSeguradora"
+              value={formData.procSeguradora}
               onChange={handleInputChange}
             />
           </Row>
           <TitleSecundario>Dados do Segurado</TitleSecundario>
           <Row>
-            <TextLabel htmlFor="seguradoId">Segurado</TextLabel>
+            <TextLabel htmlFor="segurado">Segurado</TextLabel>
             <select
-              id="seguradoId"
-              name="seguradoId"
-              value={formData.seguradoId}
+              id="segurado"
+              name="segurado"
+              value={formData.segurado}
               onChange={handleSeguradoChange}
             >
               <option value="">Selecione um segurado</option>
@@ -254,17 +270,17 @@ const Seguro = () => {
             </select>
           </Row>
           <Row>
-            <TextLabel htmlFor="apolice">Número da Apólice</TextLabel>
+            <TextLabel htmlFor="nApolice">Número da Apólice</TextLabel>
             <select
-              id="apolice"
-              name="apolice"
-              value={formData.apolice}
+              id="nApolice"
+              name="nApolice"
+              value={formData.nApolice}
               onChange={handleInputChange}
             >
               <option value="">Selecione a apólice</option>
-              {filteredApolices.map((apolice, index) => (
-                <option key={index} value={apolice}>
-                  {apolice}
+              {filterednApolices.map((nApolice, index) => (
+                <option key={index} value={nApolice}>
+                  {nApolice}
                 </option>
               ))}
             </select>
@@ -280,7 +296,7 @@ const Seguro = () => {
             />
           </Row>
           <Row>
-            <TextLabel htmlFor="conhecimento">Conhecimento</TextLabel>
+            <TextLabel htmlFor="conhecimento">conhecimento</TextLabel>
             <input
               type="text"
               name="conhecimento"
@@ -328,10 +344,10 @@ const Seguro = () => {
             />
           </Row>
           <Row>
-            <TextLabel htmlFor="valorNF">Valor NF</TextLabel>
+            <TextLabel htmlFor="valorNf">Valor NF</TextLabel>
             <NumericFormat
-              name="valorNF"
-              value={formData.valorNF}
+              name="valorNf"
+              value={formData.valorNf}
               thousandSeparator="."
               decimalSeparator=","
               prefix="R$ "
@@ -342,7 +358,7 @@ const Seguro = () => {
                 const { floatValue } = values
                 setFormData((prev: any) => ({
                   ...prev,
-                  valorNF: floatValue ?? null
+                  valorNf: floatValue ?? null
                 }))
               }}
               placeholder="R$ 0,00"
@@ -372,11 +388,11 @@ const Seguro = () => {
             />
           </Row>
           <Row>
-            <TextLabel htmlFor="natureza">Natureza</TextLabel>
+            <TextLabel htmlFor="Natureza">Natureza</TextLabel>
             <input
               type="text"
-              name="natureza"
-              value={formData.natureza}
+              name="Natureza"
+              value={formData.Natureza}
               onChange={handleInputChange}
             />
           </Row>
@@ -390,7 +406,7 @@ const Seguro = () => {
             />
           </Row>
           <Row className="resumo">
-            <TextLabel htmlFor="resumo">Resumo</TextLabel>
+            <TextLabel htmlFor="resumo">resumo</TextLabel>
             <textarea
               name="resumo"
               value={formData.resumo}
@@ -525,11 +541,11 @@ const Seguro = () => {
                 />
               </Row>
               <Row>
-                <TextLabel htmlFor="local">Local</TextLabel>
+                <TextLabel htmlFor="Local">Local</TextLabel>
                 <input
                   type="text"
-                  name="local"
-                  value={formData.local}
+                  name="Local"
+                  value={formData.Local}
                   onChange={handleInputChange}
                 />
               </Row>
