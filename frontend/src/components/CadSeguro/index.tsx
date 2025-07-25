@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { NumericFormat } from 'react-number-format'
 
 import {
   CampoButtons,
@@ -65,9 +66,9 @@ const Seguro = () => {
     conhecimento: '',
     nomeCliente: '',
     tipoMercadoria: '',
-    valorEmbarcado: '',
-    valorNF: '',
-    estimativaPrejuizo: '',
+    valorEmbarcado: null as number | null,
+    valorNF: null as number | null,
+    estimativaPrejuizo: null as number | null,
     natureza: '',
     dataOcorrencia: '',
     resumo: '',
@@ -306,31 +307,67 @@ const Seguro = () => {
           </Row>
           <Row>
             <TextLabel htmlFor="valorEmbarcado">Valor Embarcado</TextLabel>
-            <input
-              type="text"
+            <NumericFormat
               name="valorEmbarcado"
               value={formData.valorEmbarcado}
-              onChange={handleInputChange}
+              thousandSeparator="."
+              decimalSeparator=","
+              prefix="R$ "
+              decimalScale={2}
+              fixedDecimalScale
+              allowNegative={false}
+              onValueChange={(values) => {
+                const { floatValue } = values
+                setFormData((prev: any) => ({
+                  ...prev,
+                  valorEmbarcado: floatValue ?? null
+                }))
+              }}
+              placeholder="R$ 0,00"
             />
           </Row>
           <Row>
             <TextLabel htmlFor="valorNF">Valor NF</TextLabel>
-            <input
-              type="text"
+            <NumericFormat
               name="valorNF"
               value={formData.valorNF}
-              onChange={handleInputChange}
+              thousandSeparator="."
+              decimalSeparator=","
+              prefix="R$ "
+              decimalScale={2}
+              fixedDecimalScale
+              allowNegative={false}
+              onValueChange={(values) => {
+                const { floatValue } = values
+                setFormData((prev: any) => ({
+                  ...prev,
+                  valorNF: floatValue ?? null
+                }))
+              }}
+              placeholder="R$ 0,00"
             />
           </Row>
           <Row>
             <TextLabel htmlFor="estimativaPrejuizo">
               Estimativa do Prejuízo
             </TextLabel>
-            <input
-              type="text"
+            <NumericFormat
               name="estimativaPrejuizo"
               value={formData.estimativaPrejuizo}
-              onChange={handleInputChange}
+              thousandSeparator="."
+              decimalSeparator=","
+              prefix="R$ "
+              decimalScale={2}
+              fixedDecimalScale
+              allowNegative={false}
+              onValueChange={(values) => {
+                const { floatValue } = values
+                setFormData((prev: any) => ({
+                  ...prev,
+                  estimativaPrejuizo: floatValue ?? null
+                }))
+              }}
+              placeholder="R$ 0,00"
             />
           </Row>
           <Row>
