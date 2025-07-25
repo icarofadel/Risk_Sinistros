@@ -10,7 +10,12 @@ import {
 } from '../FormCadSinistro/styles'
 import Botao from '../Button'
 import { BuscarSinistroModal } from '../BuscarSinistroModal'
-import { buscarSinistroPorNF } from '../../services/sinistroService'
+import {
+  atualizarSinistro,
+  buscarSinistroSeguradoraPorNF,
+  cadastrarSinistro,
+  excluirSinistro
+} from '../../services/sinistroSeguradoraService'
 
 const Seguro = () => {
   const segurado = [
@@ -52,6 +57,65 @@ const Seguro = () => {
     ]
   }
 
+  const [formData, setFormData] = useState<any>({
+    numeroProcesso: '',
+    seguradoId: '',
+    apolice: '',
+    notaFiscal: '',
+    conhecimento: '',
+    nomeCliente: '',
+    tipoMercadoria: '',
+    valorEmbarcado: '',
+    valorNF: '',
+    estimativaPrejuizo: '',
+    natureza: '',
+    dataOcorrencia: '',
+    resumo: '',
+    pagador: '',
+    remetente: '',
+    cidadeOrigem: '',
+    destinatario: '',
+    cidadeDestino: '',
+    ciaAerea: false,
+    motorista: false,
+    nomeCiaAerea: '',
+    awb: '',
+    nomeMotorista: '',
+    cpf: '',
+    placa: '',
+    manifesto: '',
+    local: '',
+    status: ''
+  })
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value, type } = e.target
+    const isCheckbox = (target: EventTarget): target is HTMLInputElement =>
+      (target as HTMLInputElement).type === 'checkbox'
+
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: isCheckbox(e.target)
+        ? (e.target as HTMLInputElement).checked
+        : value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      await cadastrarSinistro(formData)
+      alert('Sinistro enviado com sucesso!')
+    } catch (error) {
+      console.error(error)
+      alert('Erro ao enviar sinistro.')
+    }
+  }
+
   const [selectedSegurado, setSelectedSegurado] = useState<number | string>('')
   const [filteredApolices, setFilteredApolices] = useState<string[]>([])
 
@@ -60,8 +124,11 @@ const Seguro = () => {
   ) => {
     const seguradoId = Number(event.target.value)
     setSelectedSegurado(seguradoId)
-
     setFilteredApolices(apolices[seguradoId] || [])
+    setFormData((prev: any) => ({
+      ...prev,
+      seguradoId
+    }))
   }
 
   const [selected, setSelected] = useState<string | null>(null)
@@ -69,32 +136,111 @@ const Seguro = () => {
   const handleCheckboxChange = (value: string) => {
     if (selected === value) {
       setSelected(null)
+      setFormData((prev: any) => ({
+        ...prev,
+        ciaAerea: false,
+        motorista: false
+      }))
     } else {
       setSelected(value)
+      setFormData((prev: any) => ({
+        ...prev,
+        ciaAerea: value === 'option1',
+        motorista: value === 'option2'
+      }))
     }
   }
 
   const [modalAberto, setModalAberto] = useState(false)
 
-  function preencherFormulario(dados: any): void {
-    throw new Error('Function not implemented.')
+  const preencherFormulario = (dados: any): void => {
+    setFormData(dados)
+  }
+
+  const handleAtualizarSinistro = async () => {
+    try {
+      const id = formData.id // ou de outro lugar onde você armazena o ID
+      await atualizarSinistro(id, formData)
+      alert('Sinistro atualizado com sucesso!')
+    } catch (error) {
+      console.error(error)
+      alert('Erro ao atualizar sinistro.')
+    }
+  }
+
+  const handleExcluirSinistro = async () => {
+    const confirmar = window.confirm(
+      'Tem certeza que deseja excluir este sinistro?'
+    )
+    if (!confirmar) return
+
+    try {
+      const id = formData.id // certifique-se de ter o ID armazenado
+      await excluirSinistro(id)
+      alert('Sinistro excluído com sucesso!')
+      setFormData({}) // limpa o form, se quiser
+    } catch (error) {
+      console.error(error)
+      alert('Erro ao excluir sinistro.')
+    }
+  }
+
+  const handleNewSinistro = () => {
+    setFormData({
+      numeroProcesso: '',
+      seguradoId: '',
+      apolice: '',
+      notaFiscal: '',
+      conhecimento: '',
+      nomeCliente: '',
+      tipoMercadoria: '',
+      valorEmbarcado: '',
+      valorNF: '',
+      estimativaPrejuizo: '',
+      natureza: '',
+      dataOcorrencia: '',
+      resumo: '',
+      pagador: '',
+      remetente: '',
+      cidadeOrigem: '',
+      destinatario: '',
+      cidadeDestino: '',
+      ciaAerea: false,
+      motorista: false,
+      nomeCiaAerea: '',
+      awb: '',
+      nomeMotorista: '',
+      cpf: '',
+      placa: '',
+      manifesto: '',
+      local: '',
+      status: ''
+    })
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <CampoForm>
         <div>
           <Title>Cadastro sinistro no seguro</Title>
           <Row>
-            <TextLabel htmlFor="NcParceiro">Nº Processo seguradora</TextLabel>
-            <input type="number" />
+            <TextLabel htmlFor="numeroProcesso">
+              Nº Processo seguradora
+            </TextLabel>
+            <input
+              type="number"
+              name="numeroProcesso"
+              value={formData.numeroProcesso}
+              onChange={handleInputChange}
+            />
           </Row>
           <TitleSecundario>Dados do Segurado</TitleSecundario>
           <Row>
-            <TextLabel htmlFor="segurado">Segurado</TextLabel>
+            <TextLabel htmlFor="seguradoId">Segurado</TextLabel>
             <select
-              id="segurado"
-              value={selectedSegurado}
+              id="seguradoId"
+              name="seguradoId"
+              value={formData.seguradoId}
               onChange={handleSeguradoChange}
             >
               <option value="">Selecione um segurado</option>
@@ -106,8 +252,13 @@ const Seguro = () => {
             </select>
           </Row>
           <Row>
-            <TextLabel htmlFor="Apolice">Número da Apólice</TextLabel>
-            <select id="Apolice">
+            <TextLabel htmlFor="apolice">Número da Apólice</TextLabel>
+            <select
+              id="apolice"
+              name="apolice"
+              value={formData.apolice}
+              onChange={handleInputChange}
+            >
               <option value="">Selecione a apólice</option>
               {filteredApolices.map((apolice, index) => (
                 <option key={index} value={apolice}>
@@ -117,167 +268,273 @@ const Seguro = () => {
             </select>
           </Row>
           <TitleSecundario>Dados do sinistro</TitleSecundario>
-          <div>
-            <Row>
-              <TextLabel htmlFor="NF">Nota Fiscal</TextLabel>
-              <input type="number" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="Conhecimento">Conhecimento</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="NomeCliente">Nome do cliente</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="TipoMercadoria">Tipo de Mercadoria</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="ValorEmbarcado">Valor Embarcado</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="ValorNF">Valor NF</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="EstimativaPrejuizo">
-                Estimativa do Prejuizo
-              </TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="Natureza">Natureza</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="DataOcorrencia">Data da ocorrência</TextLabel>
-              <input type="date" />
-            </Row>
-            <div>
-              <Row className="resumo">
-                <TextLabel htmlFor="Resumo">Resumo</TextLabel>
-                <textarea name="Resumo" id="Resumo"></textarea>
-              </Row>
-            </div>
+          <Row>
+            <TextLabel htmlFor="notaFiscal">Nota Fiscal</TextLabel>
+            <input
+              type="number"
+              name="notaFiscal"
+              value={formData.notaFiscal}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="conhecimento">Conhecimento</TextLabel>
+            <input
+              type="text"
+              name="conhecimento"
+              value={formData.conhecimento}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="nomeCliente">Nome do cliente</TextLabel>
+            <input
+              type="text"
+              name="nomeCliente"
+              value={formData.nomeCliente}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="tipoMercadoria">Tipo de Mercadoria</TextLabel>
+            <input
+              type="text"
+              name="tipoMercadoria"
+              value={formData.tipoMercadoria}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="valorEmbarcado">Valor Embarcado</TextLabel>
+            <input
+              type="text"
+              name="valorEmbarcado"
+              value={formData.valorEmbarcado}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="valorNF">Valor NF</TextLabel>
+            <input
+              type="text"
+              name="valorNF"
+              value={formData.valorNF}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="estimativaPrejuizo">
+              Estimativa do Prejuízo
+            </TextLabel>
+            <input
+              type="text"
+              name="estimativaPrejuizo"
+              value={formData.estimativaPrejuizo}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="natureza">Natureza</TextLabel>
+            <input
+              type="text"
+              name="natureza"
+              value={formData.natureza}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="dataOcorrencia">Data da ocorrência</TextLabel>
+            <input
+              type="date"
+              name="dataOcorrencia"
+              value={formData.dataOcorrencia}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row className="resumo">
+            <TextLabel htmlFor="resumo">Resumo</TextLabel>
+            <textarea
+              name="resumo"
+              value={formData.resumo}
+              onChange={handleInputChange}
+            ></textarea>
+          </Row>
 
-            <TitleSecundario>Dados da entrega</TitleSecundario>
-            <Row>
-              <TextLabel htmlFor="Pagador">Pagador</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="Remetente">Remetente</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="CidadeOrigem">Cidade Origem</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="Destinatario">Destinatário</TextLabel>
-              <input type="text" />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="CidadeDestino">Cidade Destino</TextLabel>
-              <input type="text" />
-            </Row>
-          </div>
+          <TitleSecundario>Dados da entrega</TitleSecundario>
+          <Row>
+            <TextLabel htmlFor="pagador">Pagador</TextLabel>
+            <input
+              type="text"
+              name="pagador"
+              value={formData.pagador}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="remetente">Remetente</TextLabel>
+            <input
+              type="text"
+              name="remetente"
+              value={formData.remetente}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="cidadeOrigem">Cidade Origem</TextLabel>
+            <input
+              type="text"
+              name="cidadeOrigem"
+              value={formData.cidadeOrigem}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="destinatario">Destinatário</TextLabel>
+            <input
+              type="text"
+              name="destinatario"
+              value={formData.destinatario}
+              onChange={handleInputChange}
+            />
+          </Row>
+          <Row>
+            <TextLabel htmlFor="cidadeDestino">Cidade Destino</TextLabel>
+            <input
+              type="text"
+              name="cidadeDestino"
+              value={formData.cidadeDestino}
+              onChange={handleInputChange}
+            />
+          </Row>
 
           <TitleSecundario>Informações complementares</TitleSecundario>
-          <div>
-            <Row className="resumo">
-              <TextLabel htmlFor="CiaAerea">Cia. aérea</TextLabel>
-              <input
-                type="checkbox"
-                checked={selected === 'option1'}
-                onChange={() => handleCheckboxChange('option1')}
-              />
-              <TextLabel htmlFor="Motorista">Motorista</TextLabel>
-              <input
-                type="checkbox"
-                checked={selected === 'option2'}
-                onChange={() => handleCheckboxChange('option2')}
-              />
-            </Row>
+          <Row className="resumo">
+            <TextLabel htmlFor="ciaAerea">Cia. aérea</TextLabel>
+            <input
+              type="checkbox"
+              checked={selected === 'option1'}
+              onChange={() => handleCheckboxChange('option1')}
+            />
+            <TextLabel htmlFor="motorista">Motorista</TextLabel>
+            <input
+              type="checkbox"
+              checked={selected === 'option2'}
+              onChange={() => handleCheckboxChange('option2')}
+            />
+          </Row>
 
-            <div>
-              {selected === 'option1' && (
-                <>
-                  <Row>
-                    <TextLabel htmlFor="CiaArea">Nome Cia. área</TextLabel>
-                    <input type="text" />
-                  </Row>
-                  <Row>
-                    <TextLabel htmlFor="CiaArea">AWB</TextLabel>
-                    <input type="text" />
-                  </Row>
-                </>
-              )}
-              {selected === 'option2' && (
-                <>
-                  <Row>
-                    <TextLabel htmlFor="Motorista">Motorista</TextLabel>
-                    <input type="text" />
-                  </Row>
-                  <Row>
-                    <TextLabel htmlFor="CPF">CPF</TextLabel>
-                    <input type="text" />
-                  </Row>
-                  <Row>
-                    <TextLabel htmlFor="Placa">Placa</TextLabel>
-                    <input type="text" />
-                  </Row>
-                  <Row>
-                    <TextLabel htmlFor="Manifesto">Manifesto</TextLabel>
-                    <input type="number" />
-                  </Row>
-                  <Row>
-                    <TextLabel htmlFor="Local">Local</TextLabel>
-                    <input type="text" />
-                  </Row>
-                </>
-              )}
-            </div>
-          </div>
+          {selected === 'option1' && (
+            <>
+              <Row>
+                <TextLabel htmlFor="nomeCiaAerea">Nome Cia. aérea</TextLabel>
+                <input
+                  type="text"
+                  name="nomeCiaAerea"
+                  value={formData.nomeCiaAerea}
+                  onChange={handleInputChange}
+                />
+              </Row>
+              <Row>
+                <TextLabel htmlFor="awb">AWB</TextLabel>
+                <input
+                  type="text"
+                  name="awb"
+                  value={formData.awb}
+                  onChange={handleInputChange}
+                />
+              </Row>
+            </>
+          )}
+          {selected === 'option2' && (
+            <>
+              <Row>
+                <TextLabel htmlFor="nomeMotorista">Motorista</TextLabel>
+                <input
+                  type="text"
+                  name="nomeMotorista"
+                  value={formData.nomeMotorista}
+                  onChange={handleInputChange}
+                />
+              </Row>
+              <Row>
+                <TextLabel htmlFor="cpf">CPF</TextLabel>
+                <input
+                  type="text"
+                  name="cpf"
+                  value={formData.cpf}
+                  onChange={handleInputChange}
+                />
+              </Row>
+              <Row>
+                <TextLabel htmlFor="placa">Placa</TextLabel>
+                <input
+                  type="text"
+                  name="placa"
+                  value={formData.placa}
+                  onChange={handleInputChange}
+                />
+              </Row>
+              <Row>
+                <TextLabel htmlFor="manifesto">Manifesto</TextLabel>
+                <input
+                  type="number"
+                  name="manifesto"
+                  value={formData.manifesto}
+                  onChange={handleInputChange}
+                />
+              </Row>
+              <Row>
+                <TextLabel htmlFor="local">Local</TextLabel>
+                <input
+                  type="text"
+                  name="local"
+                  value={formData.local}
+                  onChange={handleInputChange}
+                />
+              </Row>
+            </>
+          )}
 
           <TitleSecundario>Finalização</TitleSecundario>
-          <div>
-            <Row>
-              <TextLabel htmlFor="status">Status</TextLabel>
-              <select name="Status" id="Status">
-                <option value="SelecioneStatus">Selecione o status</option>
-                <option value="Acionado">Acionado</option>
-                <option value="Analise">Em análise</option>
-                <option value="Pendente de documentos">
-                  Pendente de documentos
-                </option>
-                <option value="Vistoria">Vistoria</option>
-                <option value="AssinaturaTed">Ag. assinatura TED</option>
-                <option value="AguardandoIndenizacao">Ag. indenização</option>
-                <option value="Indenizado">Indenizado</option>
-              </select>
-            </Row>
-          </div>
+          <Row>
+            <TextLabel htmlFor="status">Status</TextLabel>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleInputChange}
+            >
+              <option value="">Selecione o status</option>
+              <option value="Acionado">Acionado</option>
+              <option value="Analise">Em análise</option>
+              <option value="Pendente de documentos">
+                Pendente de documentos
+              </option>
+              <option value="Vistoria">Vistoria</option>
+              <option value="AssinaturaTed">Ag. assinatura TED</option>
+              <option value="AguardandoIndenizacao">Ag. indenização</option>
+              <option value="Indenizado">Indenizado</option>
+            </select>
+          </Row>
 
           <CampoButtons>
-            <Botao type="link" to={`/`} title="Fechar sinistro">
-              Fechar sinistro
+            <Botao
+              type="button"
+              title="Novo Sinistro"
+              onClick={handleNewSinistro}
+            >
+              Novo Sinistro
             </Botao>
-            <Botao type="submit" to={`/`} title="Excluir sinistro">
-              Excluir Sinistro
-            </Botao>
-            <Botao type="submit" to={`/`} title="Imprimir sinistro">
-              Imprimir Sinistro
-            </Botao>
-            <Botao type="submit" to={`/`} title="Salvar">
-              Salvar
-            </Botao>
-            <Botao type="submit" to={`/`} title="Adicionar novo sinistro">
-              Adicionar novo sinistro
-            </Botao>
+
+            {formData.id && (
+              <Botao
+                type="button"
+                onClick={handleAtualizarSinistro}
+                title={'Atualizar Sinistro'}
+              >
+                Atualizar Sinistro
+              </Botao>
+            )}
+
             <Botao
               type="button"
               title="Buscar Sinistro"
@@ -285,12 +542,25 @@ const Seguro = () => {
             >
               Buscar Sinistro
             </Botao>
+
+            <Botao type="submit" title="Salvar">
+              Salvar
+            </Botao>
+
+            <Botao type="link" to={`/`} title="Fechar sinistro">
+              Fechar sinistro
+            </Botao>
+
+            <Botao type="link" to={`/`} title="Fechar sinistro">
+              Fechar sinistro
+            </Botao>
           </CampoButtons>
+
           {modalAberto && (
             <BuscarSinistroModal
               fechar={() => setModalAberto(false)}
               preencherFormulario={preencherFormulario}
-              service={buscarSinistroPorNF} // <-- injeta a função do seu service parceiro
+              service={buscarSinistroSeguradoraPorNF}
             />
           )}
         </div>
