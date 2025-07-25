@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NumericFormat } from 'react-number-format'
+import InputMask from 'react-input-mask'
 
 import {
   CampoButtons,
@@ -495,12 +496,15 @@ const Seguro = () => {
               </Row>
               <Row>
                 <TextLabel htmlFor="cpf">CPF</TextLabel>
-                <input
-                  type="text"
-                  name="cpf"
+                <InputMask
+                  mask="999.999.999-99"
                   value={formData.cpf}
                   onChange={handleInputChange}
-                />
+                >
+                  {(inputProps: any) => (
+                    <input {...inputProps} type="text" name="cpf" id="cpf" />
+                  )}
+                </InputMask>
               </Row>
               <Row>
                 <TextLabel htmlFor="placa">Placa</TextLabel>
