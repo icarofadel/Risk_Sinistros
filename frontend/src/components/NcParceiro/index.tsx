@@ -30,7 +30,7 @@ const NcParceiros = () => {
     sacador: 'IBL',
     sacado: '',
     envioControladoria: '',
-    numeroFatura: ''
+    nFatura: ''
   })
 
   // Para armazenar o ID do sinistro (para atualizar/excluir)
@@ -98,7 +98,7 @@ const NcParceiros = () => {
       sacador: 'IBL',
       sacado: '',
       envioControladoria: '',
-      numeroFatura: ''
+      nFatura: ''
     })
     setSinistroId(null)
   }
@@ -118,7 +118,7 @@ const NcParceiros = () => {
       sacador: '',
       sacado: '',
       envioControladoria: '',
-      numeroFatura: ''
+      nFatura: ''
     })
   }
 
@@ -133,7 +133,7 @@ const NcParceiros = () => {
       sacador: dados.sacador,
       sacado: dados.sacado,
       envioControladoria: dados.dataenviocontroladoria,
-      numeroFatura: dados.nfatura
+      nFatura: dados.nFatura
     })
   }
 
@@ -280,12 +280,12 @@ const NcParceiros = () => {
             </Row>
 
             <Row className="Fatura">
-              <TextLabel htmlFor="numeroFatura">Nº da Fatura</TextLabel>
+              <TextLabel htmlFor="nFatura">Nº da Fatura</TextLabel>
               <input
                 type="text"
-                name="numeroFatura"
-                id="numeroFatura"
-                value={formData.numeroFatura || ''}
+                name="nFatura"
+                id="nFatura"
+                value={formData.nFatura || ''}
                 onChange={handleInputChange}
               />
             </Row>
