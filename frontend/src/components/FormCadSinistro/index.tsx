@@ -483,7 +483,7 @@ const FormSinistro = () => {
                 title="Novo Sinistro"
                 onClick={handleNewSinistro}
               >
-                Novo Sinistro
+                Adicionar novo sinistro
               </Botao>
 
               {formData.id && (

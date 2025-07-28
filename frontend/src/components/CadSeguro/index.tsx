@@ -589,7 +589,7 @@ const Seguro = () => {
               title="Novo Sinistro"
               onClick={handleNewSinistro}
             >
-              Novo Sinistro
+              Adicionar novo sinistro
             </Botao>
 
             {formData.id && (
