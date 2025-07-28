@@ -14,14 +14,15 @@ import {
   cadastrarSinistro,
   atualizarSinistro,
   excluirSinistro,
-  buscarSinistroParceiroPorNF
+  buscarSinistroParceiroPorNF,
+  baixarCartaSinistro
 } from '../../services/sinistroParceiroService'
 import { BuscarSinistroModal } from '../BuscarSinistroModal'
 
 const NcParceiros = () => {
   const [modalAberto, setModalAberto] = useState(false)
   const [formData, setFormData] = useState({
-    ncParceiro: '',
+    id: '',
     dataOcorrencia: '',
     notaFiscal: '',
     nomeCliente: '',
@@ -60,7 +61,7 @@ const NcParceiros = () => {
   }
 
   const handleExcluir = async () => {
-    if (!formData.ncParceiro) {
+    if (!formData.id) {
       alert('Busque um sinistro antes de excluir.')
       return
     }
@@ -71,7 +72,7 @@ const NcParceiros = () => {
     if (!confirmar) return
 
     try {
-      await excluirSinistro(Number(formData.ncParceiro))
+      await excluirSinistro(Number(formData.id))
       alert('Sinistro excluído com sucesso!')
       limparFormulario()
     } catch (error) {
@@ -81,13 +82,13 @@ const NcParceiros = () => {
   }
 
   const handleAtualizarSinistro = async () => {
-    if (!formData.ncParceiro || isNaN(Number(formData.ncParceiro))) {
+    if (!formData.id || isNaN(Number(formData.id))) {
       alert('Nenhum sinistro válido selecionado para atualizar.')
       return
     }
 
     try {
-      await atualizarSinistro(Number(formData.ncParceiro), formData)
+      await atualizarSinistro(Number(formData.id), formData)
       alert('Sinistro atualizado com sucesso!')
     } catch (error) {
       alert('Erro ao atualizar o sinistro.')
@@ -96,7 +97,7 @@ const NcParceiros = () => {
 
   const limparFormulario = () => {
     setFormData({
-      ncParceiro: '',
+      id: '',
       dataOcorrencia: '',
       notaFiscal: '',
       nomeCliente: '',
@@ -116,7 +117,7 @@ const NcParceiros = () => {
 
   const handleNewSinistro = () => {
     setFormData({
-      ncParceiro: '',
+      id: '',
       dataOcorrencia: '',
       notaFiscal: '',
       nomeCliente: '',
@@ -131,7 +132,7 @@ const NcParceiros = () => {
 
   const preencherFormulario = (dados: any) => {
     setFormData({
-      ncParceiro: dados.id,
+      id: dados.id,
       dataOcorrencia: dados.dataOcorrencia,
       notaFiscal: dados.notaFiscal,
       nomeCliente: dados.nomeCliente,
@@ -142,6 +143,28 @@ const NcParceiros = () => {
       envioControladoria: dados.dataenviocontroladoria,
       nFatura: dados.nFatura
     })
+  }
+
+  const handleDownloadCarta = async () => {
+    if (!formData.id || isNaN(Number(formData.id))) {
+      alert('ID do sinistro inválido para gerar a carta.')
+      return
+    }
+
+    try {
+      const blob = await baixarCartaSinistro(Number(formData.id))
+      const url = window.URL.createObjectURL(blob)
+
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'carta-sinistro.pdf')
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    } catch (error) {
+      console.error(error)
+      alert('Erro ao baixar a carta')
+    }
   }
 
   return (
@@ -158,12 +181,12 @@ const NcParceiros = () => {
           <div>
             <Title>Cadastro de NC para Parceiro</Title>
             <Row>
-              <TextLabel htmlFor="ncParceiro">NC Parceiro</TextLabel>
+              <TextLabel htmlFor="id">NC Parceiro</TextLabel>
               <input
                 type="number"
-                name="ncParceiro"
-                id="ncParceiro"
-                value={formData.ncParceiro}
+                name="id"
+                id="id"
+                value={formData.id}
                 onChange={handleInputChange}
               />
             </Row>
@@ -310,7 +333,7 @@ const NcParceiros = () => {
                 Salvar
               </Botao>
 
-              {formData.ncParceiro && (
+              {formData.id && (
                 <Botao
                   type="button"
                   onClick={handleAtualizarSinistro}
@@ -330,10 +353,10 @@ const NcParceiros = () => {
 
               <Botao
                 type="button"
-                title="Imprimir sinistro"
-                onClick={handlePrint}
+                title="Gerar NC Parceiro"
+                onClick={handleDownloadCarta}
               >
-                Imprimir Sinistro
+                Gerar NC Parceiro
               </Botao>
               <Botao
                 type="button"

@@ -30,3 +30,11 @@ export const atualizarSinistro = async (id: number, dadosAtualizados: any) => {
 export const excluirSinistro = async (id: number) => {
   await axios.delete(`${API_URL}/${id}`)
 }
+
+export const baixarCartaSinistro = async (id: number): Promise<Blob> => {
+  const response = await axios.get(`${API_URL}/Nc-Parceiro/${id}`, {
+    responseType: 'blob'
+  })
+
+  return response.data
+}
