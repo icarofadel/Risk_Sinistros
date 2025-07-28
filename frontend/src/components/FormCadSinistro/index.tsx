@@ -72,12 +72,19 @@ const FormSinistro = () => {
       alert('Informe o ID do sinistro para excluir.')
       return
     }
+
+    const confirmar = window.confirm(
+      'Tem certeza que deseja excluir este sinistro?'
+    )
+    if (!confirmar) return
+
     try {
-      await excluirSinistro(Number(formData.id)) // Usa a função do service
+      await excluirSinistro(Number(formData.id))
       alert('Sinistro excluído com sucesso')
       handleNewSinistro()
     } catch (error) {
       alert('Erro ao excluir sinistro')
+      console.error(error)
     }
   }
 

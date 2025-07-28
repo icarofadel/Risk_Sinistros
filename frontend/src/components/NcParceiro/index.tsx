@@ -64,12 +64,19 @@ const NcParceiros = () => {
       alert('Busque um sinistro antes de excluir.')
       return
     }
+
+    const confirmar = window.confirm(
+      'Tem certeza que deseja excluir este sinistro?'
+    )
+    if (!confirmar) return
+
     try {
       await excluirSinistro(Number(formData.ncParceiro))
       alert('Sinistro excluído com sucesso!')
       limparFormulario()
     } catch (error) {
       alert('Erro ao excluir: ' + (error as Error).message)
+      console.error(error)
     }
   }
 
@@ -297,6 +304,10 @@ const NcParceiros = () => {
                 onClick={handleNewSinistro}
               >
                 Adicionar novo sinistro
+              </Botao>
+
+              <Botao type="submit" title="Salvar">
+                Salvar
               </Botao>
 
               {formData.ncParceiro && (
