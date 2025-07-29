@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import InputMask from 'react-input-mask'
 import { NumericFormat } from 'react-number-format'
 import {
   CampoButtons,
@@ -30,6 +31,7 @@ const NcParceiros = () => {
     valorSinistro: null as number | null,
     sacador: 'IBL',
     sacado: '',
+    cnpjSacado: '',
     envioControladoria: '',
     nFatura: ''
   })
@@ -37,15 +39,11 @@ const NcParceiros = () => {
   // Para armazenar o ID do sinistro (para atualizar/excluir)
   const [sinistroId, setSinistroId] = useState<number | null>(null)
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target
+  const handleInputChange = (name: string, value: string) => {
+    const onlyDigits = name === 'CnpjSacado' ? value.replace(/\D/g, '') : value
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: onlyDigits
     }))
   }
 
@@ -105,14 +103,11 @@ const NcParceiros = () => {
       valorSinistro: null,
       sacador: 'IBL',
       sacado: '',
+      cnpjSacado: '',
       envioControladoria: '',
       nFatura: ''
     })
     setSinistroId(null)
-  }
-
-  const handlePrint = () => {
-    window.print()
   }
 
   const handleNewSinistro = () => {
@@ -125,6 +120,7 @@ const NcParceiros = () => {
       valorSinistro: null as number | null,
       sacador: '',
       sacado: '',
+      cnpjSacado: '',
       envioControladoria: '',
       nFatura: ''
     })
@@ -140,6 +136,7 @@ const NcParceiros = () => {
       valorSinistro: dados.valorSinistro,
       sacador: dados.sacador,
       sacado: dados.sacado,
+      cnpjSacado: dados.cnpjSacado,
       envioControladoria: dados.dataenviocontroladoria,
       nFatura: dados.nFatura
     })
@@ -187,7 +184,7 @@ const NcParceiros = () => {
                 name="id"
                 id="id"
                 value={formData.id}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange('id', e.target.value)}
               />
             </Row>
             <Row>
@@ -197,7 +194,9 @@ const NcParceiros = () => {
                 name="dataOcorrencia"
                 id="dataOcorrencia"
                 value={formData.dataOcorrencia || ''}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange('dataOcorrencia', e.target.value)
+                }
               />
             </Row>
             <Row>
@@ -207,7 +206,9 @@ const NcParceiros = () => {
                 name="notaFiscal"
                 id="notaFiscal"
                 value={formData.notaFiscal || ''}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange('notaFiscal', e.target.value)
+                }
               />
             </Row>
 
@@ -218,7 +219,9 @@ const NcParceiros = () => {
                 name="nomeCliente"
                 id="nomeCliente"
                 value={formData.nomeCliente || ''}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange('nomeCliente', e.target.value)
+                }
               />
             </Row>
 
@@ -228,7 +231,7 @@ const NcParceiros = () => {
                 name="motivo"
                 id="motivo"
                 value={formData.motivo || ''}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange('motivo', e.target.value)}
               >
                 <option value="Avaria">Avaria</option>
                 <option value="Roubo">Roubo</option>
@@ -273,11 +276,15 @@ const NcParceiros = () => {
                 name="sacador"
                 id="sacador"
                 value={formData.sacador || ''}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange('sacador', e.target.value)}
               >
-                <option value="IBL">Intermodal Brasíl Logística LTDA</option>
-                <option value="Logic">Logic Pharma Armazéns Gerais LTDA</option>
-                <option value="IBLValores">
+                <option value="Intermodal Brasíl Logística LTDA">
+                  Intermodal Brasíl Logística LTDA
+                </option>
+                <option value="Logic Pharma Armazéns Gerais LTDA">
+                  Logic Pharma Armazéns Gerais LTDA
+                </option>
+                <option value="IBL Transporte de Valores LTDA">
                   IBL Transporte de Valores LTDA
                 </option>
               </select>
@@ -290,8 +297,31 @@ const NcParceiros = () => {
                 name="sacado"
                 id="sacado"
                 value={formData.sacado || ''}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange('sacado', e.target.value)}
               />
+            </Row>
+
+            <Row>
+              <TextLabel htmlFor="cnpjSacado">CNPJ Sacado</TextLabel>
+              <InputMask
+                mask="99.999.999/9999-99"
+                value={formData.cnpjSacado || ''}
+                onChange={(e) =>
+                  handleInputChange(
+                    'cnpjSacado',
+                    e.target.value.replace(/\D/g, '')
+                  )
+                }
+              >
+                {(inputProps: any) => (
+                  <input
+                    {...inputProps}
+                    type="text"
+                    name="cnpjSacado"
+                    id="cnpjSacado"
+                  />
+                )}
+              </InputMask>
             </Row>
 
             <TitleSecundario>Finalização</TitleSecundario>
@@ -305,7 +335,9 @@ const NcParceiros = () => {
                 name="envioControladoria"
                 id="envioControladoria"
                 value={formData.envioControladoria || ''}
-                onChange={handleInputChange}
+                onChange={(e) =>
+                  handleInputChange('envioControladoria', e.target.value)
+                }
               />
             </Row>
 
@@ -316,7 +348,7 @@ const NcParceiros = () => {
                 name="nFatura"
                 id="nFatura"
                 value={formData.nFatura || ''}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange('nFatura', e.target.value)}
               />
             </Row>
 

@@ -43,6 +43,7 @@ public class SinistroParceiroService {
 			if (novosDados.getValorSinistro()!= null) sinistroParceiro.setValorSinistro(novosDados.getValorSinistro());
 			if (novosDados.getSacador()!= null) sinistroParceiro.setSacador(novosDados.getSacador());
 			if (novosDados.getSacado()!= null) sinistroParceiro.setSacado(novosDados.getSacado());
+			if (novosDados.getCnpjSacado() != null) sinistroParceiro.setCnpjSacado(novosDados.getCnpjSacado());
 			if (novosDados.getEnvioControladoria()!= null) sinistroParceiro.setEnvioControladoria(novosDados.getEnvioControladoria());
 			if (novosDados.getNFatura()!= null) sinistroParceiro.setNFatura(novosDados.getNFatura());		
 			

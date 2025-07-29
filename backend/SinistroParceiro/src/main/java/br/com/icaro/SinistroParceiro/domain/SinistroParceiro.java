@@ -32,6 +32,8 @@ public class SinistroParceiro {
 	
 	private String sacado;
 	
+	private String cnpjSacado;
+	
 	private LocalDate envioControladoria;
 	
 	private String nFatura;
