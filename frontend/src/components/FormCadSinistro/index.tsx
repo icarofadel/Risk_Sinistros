@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import InputMask from 'react-input-mask'
 import { NumericFormat } from 'react-number-format'
 import * as S from './styles'
 import Botao from '../Button'
@@ -410,13 +411,21 @@ const FormSinistro = () => {
                       />
                     </S.Row>
                     <S.Row>
-                      <S.TextLabel htmlFor="CPF">CPF</S.TextLabel>
-                      <input
-                        type="text"
-                        name="cpf"
-                        value={formData.cpf || ''}
+                      <S.TextLabel htmlFor="cpf">CPF</S.TextLabel>
+                      <InputMask
+                        mask="999.999.999-99"
+                        value={formData.cpf}
                         onChange={handleInputChange}
-                      />
+                      >
+                        {(inputProps: any) => (
+                          <input
+                            {...inputProps}
+                            type="text"
+                            name="cpf"
+                            id="cpf"
+                          />
+                        )}
+                      </InputMask>
                     </S.Row>
                     <S.Row>
                       <S.TextLabel htmlFor="Placa">Placa</S.TextLabel>

@@ -46,7 +46,7 @@ public class Sinistro {
     
     private String nomeMotorista;
     
-    private Long cpfMotorista;
+    private String cpfMotorista;
     
     private String placaVeiculo;
     
