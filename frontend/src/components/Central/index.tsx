@@ -56,10 +56,10 @@ const Central = () => (
           Relatório de sinistros
         </Botao>
         <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
-          Consultar NC para parceiros
+          Relatório de NC para parceiros
         </Botao>
         <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
-          Consultar sinistro no seguro
+          Relatório de sinistro no seguro
         </Botao>
       </div>
     </S.ContainerRelatorio>
