@@ -1,3 +1,4 @@
+import { exportarSinistrosExcelParceiro } from '../../services/sinistroParceiroService'
 import { exportarSinistrosExcel } from '../../services/sinistroService'
 import Botao from '../Button'
 import * as S from './styles'
@@ -55,8 +56,12 @@ const Central = () => (
         >
           Relatório de sinistros
         </Botao>
-        <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
-          Relatório de NC para parceiros
+        <Botao
+          type="button"
+          onClick={exportarSinistrosExcelParceiro}
+          title="Relatório de NC Parceiro"
+        >
+          Relatório de NC Parceiro
         </Botao>
         <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
           Relatório de sinistro no seguro
