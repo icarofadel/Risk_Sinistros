@@ -66,4 +66,15 @@ public class SinistroResources {
         sinistroService.excluirSinistro(id);  // Exclui sinistro
         return ResponseEntity.ok("Removido com sucesso");
     }
+    
+    // Exportar
+    @GetMapping("/exportar")
+    public ResponseEntity<byte[]> exportarParaExcel() {
+    	byte[] excel = sinistroService.exportarParaExcel();
+    	
+    	return ResponseEntity.ok()
+    			.header("Content-Disposition", "attachment; filename=sinistros.xlsx")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(excel);
+    }
 }

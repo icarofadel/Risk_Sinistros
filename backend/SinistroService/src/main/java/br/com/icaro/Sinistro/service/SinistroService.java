@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import br.com.icaro.Sinistro.domain.Sinistro;
 import br.com.icaro.Sinistro.repository.ISinistroRepository;
@@ -50,6 +55,7 @@ public class SinistroService {
             if (novosDados.getNomeCiaAerea() != null) sinistro.setNomeCiaAerea(novosDados.getNomeCiaAerea());
             if (novosDados.getAwb() != null) sinistro.setAwb(novosDados.getAwb());
             if (novosDados.getNomeMotorista() != null) sinistro.setNomeMotorista(novosDados.getNomeMotorista());
+            if (novosDados.getCpfMotorista() != null) sinistro.setCpfMotorista(novosDados.getCpfMotorista());
             if (novosDados.getPlacaVeiculo() != null) sinistro.setPlacaVeiculo(novosDados.getPlacaVeiculo());
             if (novosDados.getManifesto() != null) sinistro.setManifesto(novosDados.getManifesto());
             if (novosDados.getLocal() != null) sinistro.setLocal(novosDados.getLocal());
@@ -65,5 +71,68 @@ public class SinistroService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinistro não encontrado");
         }
         sinistroRepository.deleteById(id);  // Exclui o sinistro do banco
+    }
+    
+    public byte[] exportarParaExcel() {
+        List<Sinistro> sinistros = listarTodos();
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Sinistros");
+
+            // Cabeçalhos
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("ID");
+            header.createCell(1).setCellValue("Data Ocorrência");
+            header.createCell(2).setCellValue("Nota Fiscal");
+            header.createCell(3).setCellValue("Cliente");
+            header.createCell(4).setCellValue("Segmento");
+            header.createCell(5).setCellValue("Motivo");
+            header.createCell(6).setCellValue("Valor Sinistro");
+            header.createCell(7).setCellValue("Responsavel 1");
+            header.createCell(8).setCellValue("Responsavel 2");
+            header.createCell(9).setCellValue("Status");
+            header.createCell(10).setCellValue("Nome Cia Aérea");
+            header.createCell(11).setCellValue("AWB");
+            header.createCell(12).setCellValue("Nome Motorista");
+            header.createCell(13).setCellValue("CPF");
+            header.createCell(14).setCellValue("Placa do veiculo");
+            header.createCell(15).setCellValue("Manifesto");
+            header.createCell(16).setCellValue("Local");
+
+            // Dados
+            int rowNum = 1;
+            for (Sinistro s : sinistros) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(s.getId());
+                row.createCell(1).setCellValue(s.getDataOcorrencia());
+                row.createCell(2).setCellValue(s.getNotaFiscal());
+                row.createCell(3).setCellValue(s.getNomeCliente());
+                row.createCell(4).setCellValue(s.getSegmento());
+                row.createCell(5).setCellValue(s.getMotivo());
+                row.createCell(6).setCellValue(s.getValorSinistro());
+                row.createCell(7).setCellValue(s.getResponsavel1());
+                row.createCell(8).setCellValue(s.getResponsavel2());
+                row.createCell(9).setCellValue(s.getStatus());
+                row.createCell(10).setCellValue(s.getNomeCiaAerea());
+                row.createCell(11).setCellValue(s.getAwb());
+                row.createCell(12).setCellValue(s.getNomeMotorista());
+                row.createCell(13).setCellValue(s.getCpfMotorista());
+                row.createCell(14).setCellValue(s.getPlacaVeiculo());
+                row.createCell(15).setCellValue(s.getManifesto());
+                row.createCell(16).setCellValue(s.getLocal());
+            }
+
+            // Ajustar tamanho automático das colunas
+            for (int i = 0; i < header.getLastCellNum(); i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            workbook.write(out);
+            return out.toByteArray();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao gerar Excel", e);
+        }
     }
 }
