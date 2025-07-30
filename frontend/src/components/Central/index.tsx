@@ -1,15 +1,8 @@
 import { exportarSinistrosExcelParceiro } from '../../services/sinistroParceiroService'
+import { exportarSinistrosExcelSeguradora } from '../../services/sinistroSeguradoraService'
 import { exportarSinistrosExcel } from '../../services/sinistroService'
 import Botao from '../Button'
 import * as S from './styles'
-
-const handleExportarExcel = async () => {
-  try {
-    await exportarSinistrosExcel()
-  } catch (error) {
-    alert('Erro ao gerar o relatório. Tente novamente.')
-  }
-}
 
 const Central = () => (
   <S.HomeSection>
@@ -51,7 +44,7 @@ const Central = () => (
       <div>
         <Botao
           type="button"
-          onClick={handleExportarExcel}
+          onClick={exportarSinistrosExcel}
           title="Relatório de sinistros"
         >
           Relatório de sinistros
@@ -63,8 +56,12 @@ const Central = () => (
         >
           Relatório de NC Parceiro
         </Botao>
-        <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
-          Relatório de sinistro no seguro
+        <Botao
+          type="button"
+          onClick={exportarSinistrosExcelSeguradora}
+          title="Relatório de sinistro na seguradora"
+        >
+          Relatório de sinistro na seguradora
         </Botao>
       </div>
     </S.ContainerRelatorio>

@@ -55,4 +55,15 @@ public class SinistroSeguradoraResources {
 	public ResponseEntity<SinistroSeguradora> atualizar(@PathVariable Long id, @RequestBody @Valid SinistroSeguradora sinistro) {
 	   return ResponseEntity.ok(sinistroSeguradoraService.atualizarSinistro(id, sinistro));
 	}
+	
+    // Exportar
+    @GetMapping("/exportar")
+    public ResponseEntity<byte[]> exportarParaExcel() {
+    	byte[] excel = sinistroSeguradoraService.exportarParaExcel();
+    	
+    	return ResponseEntity.ok()
+    			.header("Content-Disposition", "attachment; filename=sinistros.xlsx")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(excel);
+    }
 }
