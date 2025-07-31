@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakponints, cores } from '../../styles'
 
 export const CampoForm = styled.div`
   color: #fff;
@@ -46,4 +46,11 @@ export const CampoButtons = styled.div`
   margin-top: 8px;
   display: flex;
   justify-content: center;
+  gap: 8px;
+
+  @media (max-width: ${breakponints.tablet}){
+    flex-direction: column;
+    align-items: stretch;
+  }
+  }
 `
