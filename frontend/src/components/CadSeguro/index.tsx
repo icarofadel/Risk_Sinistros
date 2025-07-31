@@ -176,7 +176,44 @@ const Seguro = () => {
   const [modalAberto, setModalAberto] = useState(false)
 
   const preencherFormulario = (dados: any): void => {
-    setFormData(dados)
+    const seguradoEncontrado = segurado.find((s) => s.nome === dados.segurado)
+
+    const idSegurado: number | undefined = seguradoEncontrado?.id
+
+    setSelectedSegurado(idSegurado ?? '')
+    setFilterednApolices(idSegurado ? nApolices[idSegurado] : [])
+
+    setFormData({
+      ...formData,
+      procSeguradora: dados.procSeguradora || '',
+      segurado: idSegurado ?? '',
+      nApolice: dados.nApolice || '',
+      notaFiscal: dados.notaFiscal || '',
+      conhecimento: dados.conhecimento || '',
+      nomeCliente: dados.nomeCliente || '',
+      tipoMercadoria: dados.tipoMercadoria || '',
+      valorEmbarcado: dados.valorEmbarcado || '',
+      valorNf: dados.valorNf || '',
+      estimativaPrejuizo: dados.estimativaPrejuizo || '',
+      natureza: dados.natureza || '',
+      dataOcorrencia: dados.dataOcorrencia || '',
+      resumo: dados.resumo || '',
+      pagador: dados.pagador || '',
+      remetente: dados.remetente || '',
+      cidadeOrigem: dados.cidadeOrigem || '',
+      destinatario: dados.destinatario || '',
+      cidadeDestino: dados.cidadeDestino || '',
+      ciaAerea: false,
+      motorista: false,
+      nomeCiaAerea: dados.nomeCiaAerea || '',
+      awb: dados.awb || '',
+      nomeMotorista: dados.nomeMotorista || '',
+      cpf: dados.cpf || '',
+      placa: dados.placa || '',
+      manifesto: dados.manifesto || '',
+      local: dados.local || '',
+      status: dados.status || ''
+    })
   }
 
   const handleAtualizarSinistro = async () => {
