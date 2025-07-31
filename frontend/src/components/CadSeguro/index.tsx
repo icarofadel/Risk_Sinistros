@@ -456,7 +456,7 @@ const Seguro = () => {
             />
           </S.Row>
           <S.Row className="resumo">
-            <S.TextLabel htmlFor="resumo">resumo</S.TextLabel>
+            <S.TextLabel htmlFor="resumo">Resumo</S.TextLabel>
             <textarea
               name="resumo"
               value={formData.resumo}
@@ -638,9 +638,9 @@ const Seguro = () => {
               <Botao
                 type="button"
                 onClick={handleAtualizarSinistro}
-                title={'Atualizar Sinistro'}
+                title={'Atualizar'}
               >
-                Atualizar Sinistro
+                Atualizar
               </Botao>
             )}
 
@@ -650,10 +650,10 @@ const Seguro = () => {
 
             <Botao
               type="button"
-              title="Buscar Sinistro"
+              title="Buscar"
               onClick={() => setModalAberto(true)}
             >
-              Buscar Sinistro
+              Buscar
             </Botao>
 
             <Botao
@@ -665,20 +665,15 @@ const Seguro = () => {
             </Botao>
             <Botao
               type="button"
-              title="Excluir sinistro"
+              title="Excluir"
               onClick={handleExcluirSinistro}
               className="botaoFechar"
             >
-              Excluir Sinistro
+              Excluir
             </Botao>
 
-            <Botao
-              type="link"
-              title="Fechar sinistro"
-              to={`/`}
-              className="botaoFechar"
-            >
-              Fechar sinistro
+            <Botao type="link" title="Fechar" to={`/`} className="botaoFechar">
+              Fechar
             </Botao>
           </S.CampoButtons>
 

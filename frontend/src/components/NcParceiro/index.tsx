@@ -380,10 +380,10 @@ const NcParceiros = () => {
 
               <Botao
                 type="button"
-                title="Buscar Sinistro"
+                title="Buscar"
                 onClick={() => setModalAberto(true)}
               >
-                Buscar Sinistro
+                Buscar
               </Botao>
 
               <Botao
@@ -395,19 +395,19 @@ const NcParceiros = () => {
               </Botao>
               <Botao
                 type="button"
-                title="Excluir sinistro"
+                title="Excluir"
                 onClick={handleExcluir}
                 className="botaoFechar"
               >
-                Excluir Sinistro
+                Excluir
               </Botao>
               <Botao
                 type="link"
-                title="Fechar sinistro"
+                title="Fechar"
                 to={`/`}
                 className="botaoFechar"
               >
-                Fechar sinistro
+                Fechar
               </Botao>
             </S.CampoButtons>
           </div>

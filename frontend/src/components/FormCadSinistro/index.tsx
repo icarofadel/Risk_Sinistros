@@ -508,16 +508,16 @@ const FormSinistro = () => {
                   onClick={handleAtualizarSinistro}
                   title={'Atualizar Sinistro'}
                 >
-                  Atualizar Sinistro
+                  Atualizar
                 </Botao>
               )}
 
               <Botao
                 type="button"
-                title="Buscar Sinistro"
+                title="Buscar"
                 onClick={() => setModalAberto(true)}
               >
-                Buscar Sinistro
+                Buscar
               </Botao>
 
               <Botao type="submit" title="Salvar">
@@ -530,20 +530,20 @@ const FormSinistro = () => {
 
               <Botao
                 type="button"
-                title="Excluir sinistro"
+                title="Excluir"
                 onClick={handleDelete}
                 className="botaoFechar"
               >
-                Excluir Sinistro
+                Excluir
               </Botao>
 
               <Botao
                 type="link"
                 to={`/`}
-                title="Fechar sinistro"
+                title="Fechar"
                 className="botaoFechar"
               >
-                Fechar sinistro
+                Fechar
               </Botao>
             </S.CampoButtons>
           </div>
