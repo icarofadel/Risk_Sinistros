@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakponints, cores } from '../../styles'
 
 export const HeaderBar = styled.header`
   background-color: #000;
@@ -9,14 +9,25 @@ export const HeaderBar = styled.header`
   justify-content: space-between;
 
   div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     max-width: 1024px;
     width: 100%;
-    margin: 0 auto;
+    padding: 0 16px;
   }
 
   img {
     width: 180px;
     height: 100%;
     margin: 0 8px;
+  }
+
+  h1 {
+    font-size: 24px;
+
+    @media (max-width: ${breakponints.tablet}) {
+      display: none;
+    }
   }
 `
