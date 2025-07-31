@@ -1,9 +1,16 @@
+// Pacotes externos
 import { useState } from 'react'
 import InputMask from 'react-input-mask'
 import { NumericFormat } from 'react-number-format'
-import * as S from '../../styles'
-import Botao from '../Button'
 
+// Estilos
+import * as S from '../../styles'
+
+// Componentes
+import Botao from '../Button'
+import { BuscarSinistroModal } from '../BuscarSinistroModal'
+
+// Serviços
 import {
   cadastrarSinistro,
   atualizarSinistro,
@@ -11,7 +18,6 @@ import {
   buscarSinistroParceiroPorNF,
   baixarCartaSinistro
 } from '../../services/sinistroParceiroService'
-import { BuscarSinistroModal } from '../BuscarSinistroModal'
 
 const NcParceiros = () => {
   const [modalAberto, setModalAberto] = useState(false)

@@ -1,15 +1,22 @@
+// Pacotes externos
 import { useEffect, useState } from 'react'
 import InputMask from 'react-input-mask'
 import { NumericFormat } from 'react-number-format'
+
+// Estilos
 import * as S from '../../styles'
+
+// Componentes
 import Botao from '../Button'
+import { BuscarSinistroModal } from '../BuscarSinistroModal'
+
+// Serviços
 import {
   atualizarSinistro,
   buscarSinistroPorNF,
   cadastrarSinistro,
   excluirSinistro
 } from '../../services/sinistroService'
-import { BuscarSinistroModal } from '../BuscarSinistroModal'
 
 const FormSinistro = () => {
   const [selected, setSelected] = useState<string | null>(null)

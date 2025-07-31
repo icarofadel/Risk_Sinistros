@@ -1,10 +1,16 @@
+// Pacotes externos
 import { useState } from 'react'
 import { NumericFormat } from 'react-number-format'
 import InputMask from 'react-input-mask'
 
+// Estilos
 import * as S from '../../styles'
+
+// Componentes
 import Botao from '../Button'
 import { BuscarSinistroModal } from '../BuscarSinistroModal'
+
+// Serviços
 import {
   atualizarSinistro,
   buscarSinistroSeguradoraPorNF,
