@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import InputMask from 'react-input-mask'
 import { NumericFormat } from 'react-number-format'
-import * as S from './styles'
+import * as S from '../../styles'
 import Botao from '../Button'
 import {
   atualizarSinistro,

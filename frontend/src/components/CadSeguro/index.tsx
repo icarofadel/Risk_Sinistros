@@ -2,14 +2,7 @@ import { useState } from 'react'
 import { NumericFormat } from 'react-number-format'
 import InputMask from 'react-input-mask'
 
-import {
-  CampoButtons,
-  CampoForm,
-  Row,
-  TextLabel,
-  Title,
-  TitleSecundario
-} from '../FormCadSinistro/styles'
+import * as S from '../../styles'
 import Botao from '../Button'
 import { BuscarSinistroModal } from '../BuscarSinistroModal'
 import {
@@ -248,23 +241,23 @@ const Seguro = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <CampoForm>
+      <S.CampoForm>
         <div>
-          <Title>Cadastro sinistro no seguro</Title>
-          <Row>
-            <TextLabel htmlFor="procSeguradora">
+          <S.Title>Cadastro sinistro no seguro</S.Title>
+          <S.Row>
+            <S.TextLabel htmlFor="procSeguradora">
               Nº Processo seguradora
-            </TextLabel>
+            </S.TextLabel>
             <input
               type="text"
               name="procSeguradora"
               value={formData.procSeguradora}
               onChange={handleInputChange}
             />
-          </Row>
-          <TitleSecundario>Dados do Segurado</TitleSecundario>
-          <Row>
-            <TextLabel htmlFor="segurado">Segurado</TextLabel>
+          </S.Row>
+          <S.TitleSecundario>Dados do Segurado</S.TitleSecundario>
+          <S.Row>
+            <S.TextLabel htmlFor="segurado">Segurado</S.TextLabel>
             <select
               id="segurado"
               name="segurado"
@@ -278,9 +271,9 @@ const Seguro = () => {
                 </option>
               ))}
             </select>
-          </Row>
-          <Row>
-            <TextLabel htmlFor="nApolice">Número da Apólice</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="nApolice">Número da Apólice</S.TextLabel>
             <select
               id="nApolice"
               name="nApolice"
@@ -294,46 +287,48 @@ const Seguro = () => {
                 </option>
               ))}
             </select>
-          </Row>
-          <TitleSecundario>Dados do sinistro</TitleSecundario>
-          <Row>
-            <TextLabel htmlFor="notaFiscal">Nota Fiscal</TextLabel>
+          </S.Row>
+          <S.TitleSecundario>Dados do sinistro</S.TitleSecundario>
+          <S.Row>
+            <S.TextLabel htmlFor="notaFiscal">Nota Fiscal</S.TextLabel>
             <input
               type="number"
               name="notaFiscal"
               value={formData.notaFiscal}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="conhecimento">conhecimento</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="conhecimento">conhecimento</S.TextLabel>
             <input
               type="text"
               name="conhecimento"
               value={formData.conhecimento}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="nomeCliente">Nome do cliente</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="nomeCliente">Nome do cliente</S.TextLabel>
             <input
               type="text"
               name="nomeCliente"
               value={formData.nomeCliente}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="tipoMercadoria">Tipo de Mercadoria</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="tipoMercadoria">
+              Tipo de Mercadoria
+            </S.TextLabel>
             <input
               type="text"
               name="tipoMercadoria"
               value={formData.tipoMercadoria}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="valorEmbarcado">Valor Embarcado</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="valorEmbarcado">Valor Embarcado</S.TextLabel>
             <NumericFormat
               name="valorEmbarcado"
               value={formData.valorEmbarcado}
@@ -352,9 +347,9 @@ const Seguro = () => {
               }}
               placeholder="R$ 0,00"
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="valorNf">Valor NF</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="valorNf">Valor NF</S.TextLabel>
             <NumericFormat
               name="valorNf"
               value={formData.valorNf}
@@ -373,11 +368,11 @@ const Seguro = () => {
               }}
               placeholder="R$ 0,00"
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="estimativaPrejuizo">
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="estimativaPrejuizo">
               Estimativa do Prejuízo
-            </TextLabel>
+            </S.TextLabel>
             <NumericFormat
               name="estimativaPrejuizo"
               value={formData.estimativaPrejuizo}
@@ -396,132 +391,136 @@ const Seguro = () => {
               }}
               placeholder="R$ 0,00"
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="natureza">Natureza</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="natureza">Natureza</S.TextLabel>
             <input
               type="text"
               name="natureza"
               value={formData.natureza}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="dataOcorrencia">Data da ocorrência</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="dataOcorrencia">
+              Data da ocorrência
+            </S.TextLabel>
             <input
               type="date"
               name="dataOcorrencia"
               value={formData.dataOcorrencia}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row className="resumo">
-            <TextLabel htmlFor="resumo">resumo</TextLabel>
+          </S.Row>
+          <S.Row className="resumo">
+            <S.TextLabel htmlFor="resumo">resumo</S.TextLabel>
             <textarea
               name="resumo"
               value={formData.resumo}
               onChange={handleInputChange}
             ></textarea>
-          </Row>
+          </S.Row>
 
-          <TitleSecundario>Dados da entrega</TitleSecundario>
-          <Row>
-            <TextLabel htmlFor="pagador">Pagador</TextLabel>
+          <S.TitleSecundario>Dados da entrega</S.TitleSecundario>
+          <S.Row>
+            <S.TextLabel htmlFor="pagador">Pagador</S.TextLabel>
             <input
               type="text"
               name="pagador"
               value={formData.pagador}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="remetente">Remetente</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="remetente">Remetente</S.TextLabel>
             <input
               type="text"
               name="remetente"
               value={formData.remetente}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="cidadeOrigem">Cidade Origem</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="cidadeOrigem">Cidade Origem</S.TextLabel>
             <input
               type="text"
               name="cidadeOrigem"
               value={formData.cidadeOrigem}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="destinatario">Destinatário</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="destinatario">Destinatário</S.TextLabel>
             <input
               type="text"
               name="destinatario"
               value={formData.destinatario}
               onChange={handleInputChange}
             />
-          </Row>
-          <Row>
-            <TextLabel htmlFor="cidadeDestino">Cidade Destino</TextLabel>
+          </S.Row>
+          <S.Row>
+            <S.TextLabel htmlFor="cidadeDestino">Cidade Destino</S.TextLabel>
             <input
               type="text"
               name="cidadeDestino"
               value={formData.cidadeDestino}
               onChange={handleInputChange}
             />
-          </Row>
+          </S.Row>
 
-          <TitleSecundario>Informações complementares</TitleSecundario>
-          <Row className="resumo">
-            <TextLabel htmlFor="ciaAerea">Cia. aérea</TextLabel>
+          <S.TitleSecundario>Informações complementares</S.TitleSecundario>
+          <S.Row className="resumo">
+            <S.TextLabel htmlFor="ciaAerea">Cia. aérea</S.TextLabel>
             <input
               type="checkbox"
               checked={selected === 'option1'}
               onChange={() => handleCheckboxChange('option1')}
             />
-            <TextLabel htmlFor="motorista">Motorista</TextLabel>
+            <S.TextLabel htmlFor="motorista">Motorista</S.TextLabel>
             <input
               type="checkbox"
               checked={selected === 'option2'}
               onChange={() => handleCheckboxChange('option2')}
             />
-          </Row>
+          </S.Row>
 
           {selected === 'option1' && (
             <>
-              <Row>
-                <TextLabel htmlFor="nomeCiaAerea">Nome Cia. aérea</TextLabel>
+              <S.Row>
+                <S.TextLabel htmlFor="nomeCiaAerea">
+                  Nome Cia. aérea
+                </S.TextLabel>
                 <input
                   type="text"
                   name="nomeCiaAerea"
                   value={formData.nomeCiaAerea}
                   onChange={handleInputChange}
                 />
-              </Row>
-              <Row>
-                <TextLabel htmlFor="awb">AWB</TextLabel>
+              </S.Row>
+              <S.Row>
+                <S.TextLabel htmlFor="awb">AWB</S.TextLabel>
                 <input
                   type="text"
                   name="awb"
                   value={formData.awb}
                   onChange={handleInputChange}
                 />
-              </Row>
+              </S.Row>
             </>
           )}
           {selected === 'option2' && (
             <>
-              <Row>
-                <TextLabel htmlFor="nomeMotorista">Motorista</TextLabel>
+              <S.Row>
+                <S.TextLabel htmlFor="nomeMotorista">Motorista</S.TextLabel>
                 <input
                   type="text"
                   name="nomeMotorista"
                   value={formData.nomeMotorista}
                   onChange={handleInputChange}
                 />
-              </Row>
-              <Row>
-                <TextLabel htmlFor="cpf">CPF</TextLabel>
+              </S.Row>
+              <S.Row>
+                <S.TextLabel htmlFor="cpf">CPF</S.TextLabel>
                 <InputMask
                   mask="999.999.999-99"
                   value={formData.cpf}
@@ -531,40 +530,40 @@ const Seguro = () => {
                     <input {...inputProps} type="text" name="cpf" id="cpf" />
                   )}
                 </InputMask>
-              </Row>
-              <Row>
-                <TextLabel htmlFor="placa">Placa</TextLabel>
+              </S.Row>
+              <S.Row>
+                <S.TextLabel htmlFor="placa">Placa</S.TextLabel>
                 <input
                   type="text"
                   name="placa"
                   value={formData.placa}
                   onChange={handleInputChange}
                 />
-              </Row>
-              <Row>
-                <TextLabel htmlFor="manifesto">Manifesto</TextLabel>
+              </S.Row>
+              <S.Row>
+                <S.TextLabel htmlFor="manifesto">Manifesto</S.TextLabel>
                 <input
                   type="number"
                   name="manifesto"
                   value={formData.manifesto}
                   onChange={handleInputChange}
                 />
-              </Row>
-              <Row>
-                <TextLabel htmlFor="local">Local</TextLabel>
+              </S.Row>
+              <S.Row>
+                <S.TextLabel htmlFor="local">Local</S.TextLabel>
                 <input
                   type="text"
                   name="local"
                   value={formData.local}
                   onChange={handleInputChange}
                 />
-              </Row>
+              </S.Row>
             </>
           )}
 
-          <TitleSecundario>Finalização</TitleSecundario>
-          <Row>
-            <TextLabel htmlFor="status">Status</TextLabel>
+          <S.TitleSecundario>Finalização</S.TitleSecundario>
+          <S.Row>
+            <S.TextLabel htmlFor="status">Status</S.TextLabel>
             <select
               name="status"
               value={formData.status}
@@ -581,9 +580,9 @@ const Seguro = () => {
               <option value="AguardandoIndenizacao">Ag. indenização</option>
               <option value="Indenizado">Indenizado</option>
             </select>
-          </Row>
+          </S.Row>
 
-          <CampoButtons>
+          <S.CampoButtons>
             <Botao
               type="button"
               title="Novo Sinistro"
@@ -638,7 +637,7 @@ const Seguro = () => {
             >
               Fechar sinistro
             </Botao>
-          </CampoButtons>
+          </S.CampoButtons>
 
           {modalAberto && (
             <BuscarSinistroModal
@@ -648,7 +647,7 @@ const Seguro = () => {
             />
           )}
         </div>
-      </CampoForm>
+      </S.CampoForm>
     </form>
   )
 }

@@ -1,14 +1,7 @@
 import { useState } from 'react'
 import InputMask from 'react-input-mask'
 import { NumericFormat } from 'react-number-format'
-import {
-  CampoButtons,
-  CampoForm,
-  Row,
-  TextLabel,
-  Title,
-  TitleSecundario
-} from '../FormCadSinistro/styles'
+import * as S from '../../styles'
 import Botao from '../Button'
 
 import {
@@ -174,11 +167,11 @@ const NcParceiros = () => {
         />
       )}
       <form onSubmit={handleSubmit}>
-        <CampoForm>
+        <S.CampoForm>
           <div>
-            <Title>Cadastro de NC para Parceiro</Title>
-            <Row>
-              <TextLabel htmlFor="id">NC Parceiro</TextLabel>
+            <S.Title>Cadastro de NC para Parceiro</S.Title>
+            <S.Row>
+              <S.TextLabel htmlFor="id">NC Parceiro</S.TextLabel>
               <input
                 type="number"
                 name="id"
@@ -186,9 +179,11 @@ const NcParceiros = () => {
                 value={formData.id}
                 onChange={(e) => handleInputChange('id', e.target.value)}
               />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="dataOcorrencia">Data da ocorrência</TextLabel>
+            </S.Row>
+            <S.Row>
+              <S.TextLabel htmlFor="dataOcorrencia">
+                Data da ocorrência
+              </S.TextLabel>
               <input
                 type="date"
                 name="dataOcorrencia"
@@ -198,9 +193,9 @@ const NcParceiros = () => {
                   handleInputChange('dataOcorrencia', e.target.value)
                 }
               />
-            </Row>
-            <Row>
-              <TextLabel htmlFor="notaFiscal">Nota Fiscal</TextLabel>
+            </S.Row>
+            <S.Row>
+              <S.TextLabel htmlFor="notaFiscal">Nota Fiscal</S.TextLabel>
               <input
                 type="number"
                 name="notaFiscal"
@@ -210,10 +205,10 @@ const NcParceiros = () => {
                   handleInputChange('notaFiscal', e.target.value)
                 }
               />
-            </Row>
+            </S.Row>
 
-            <Row>
-              <TextLabel htmlFor="nomeCliente">Nome do cliente</TextLabel>
+            <S.Row>
+              <S.TextLabel htmlFor="nomeCliente">Nome do cliente</S.TextLabel>
               <input
                 type="text"
                 name="nomeCliente"
@@ -223,10 +218,10 @@ const NcParceiros = () => {
                   handleInputChange('nomeCliente', e.target.value)
                 }
               />
-            </Row>
+            </S.Row>
 
-            <Row>
-              <TextLabel htmlFor="motivo">Motivo</TextLabel>
+            <S.Row>
+              <S.TextLabel htmlFor="motivo">Motivo</S.TextLabel>
               <select
                 name="motivo"
                 id="motivo"
@@ -243,10 +238,12 @@ const NcParceiros = () => {
                 </option>
                 <option value="PercaTemperatura">Perda de temperatura</option>
               </select>
-            </Row>
+            </S.Row>
 
-            <Row>
-              <TextLabel htmlFor="valorSinistro">Valor do sinistro</TextLabel>
+            <S.Row>
+              <S.TextLabel htmlFor="valorSinistro">
+                Valor do sinistro
+              </S.TextLabel>
               <NumericFormat
                 id="valorSinistro"
                 name="valorSinistro"
@@ -266,12 +263,12 @@ const NcParceiros = () => {
                 }}
                 placeholder="R$ 0,00"
               />
-            </Row>
+            </S.Row>
 
-            <TitleSecundario>Empresa do grupo</TitleSecundario>
+            <S.TitleSecundario>Empresa do grupo</S.TitleSecundario>
 
-            <Row>
-              <TextLabel htmlFor="sacador">Sacador</TextLabel>
+            <S.Row>
+              <S.TextLabel htmlFor="sacador">Sacador</S.TextLabel>
               <select
                 name="sacador"
                 id="sacador"
@@ -288,10 +285,10 @@ const NcParceiros = () => {
                   IBL Transporte de Valores LTDA
                 </option>
               </select>
-            </Row>
+            </S.Row>
 
-            <Row>
-              <TextLabel htmlFor="sacado">Sacado</TextLabel>
+            <S.Row>
+              <S.TextLabel htmlFor="sacado">Sacado</S.TextLabel>
               <input
                 type="text"
                 name="sacado"
@@ -299,10 +296,10 @@ const NcParceiros = () => {
                 value={formData.sacado || ''}
                 onChange={(e) => handleInputChange('sacado', e.target.value)}
               />
-            </Row>
+            </S.Row>
 
-            <Row>
-              <TextLabel htmlFor="cnpjSacado">CNPJ Sacado</TextLabel>
+            <S.Row>
+              <S.TextLabel htmlFor="cnpjSacado">CNPJ Sacado</S.TextLabel>
               <InputMask
                 mask="99.999.999/9999-99"
                 value={formData.cnpjSacado || ''}
@@ -322,14 +319,14 @@ const NcParceiros = () => {
                   />
                 )}
               </InputMask>
-            </Row>
+            </S.Row>
 
-            <TitleSecundario>Finalização</TitleSecundario>
+            <S.TitleSecundario>Finalização</S.TitleSecundario>
 
-            <Row className="Finalizacao">
-              <TextLabel htmlFor="envioControladoria">
+            <S.Row className="Finalizacao">
+              <S.TextLabel htmlFor="envioControladoria">
                 Envio para a controladoria
-              </TextLabel>
+              </S.TextLabel>
               <input
                 type="date"
                 name="envioControladoria"
@@ -339,10 +336,10 @@ const NcParceiros = () => {
                   handleInputChange('envioControladoria', e.target.value)
                 }
               />
-            </Row>
+            </S.Row>
 
-            <Row className="Fatura">
-              <TextLabel htmlFor="nFatura">Nº da Fatura</TextLabel>
+            <S.Row className="Fatura">
+              <S.TextLabel htmlFor="nFatura">Nº da Fatura</S.TextLabel>
               <input
                 type="text"
                 name="nFatura"
@@ -350,9 +347,9 @@ const NcParceiros = () => {
                 value={formData.nFatura || ''}
                 onChange={(e) => handleInputChange('nFatura', e.target.value)}
               />
-            </Row>
+            </S.Row>
 
-            <CampoButtons>
+            <S.CampoButtons>
               <Botao
                 type="button"
                 title="Adicionar novo sinistro"
@@ -406,9 +403,9 @@ const NcParceiros = () => {
               >
                 Fechar sinistro
               </Botao>
-            </CampoButtons>
+            </S.CampoButtons>
           </div>
-        </CampoForm>
+        </S.CampoForm>
       </form>
     </div>
   )
