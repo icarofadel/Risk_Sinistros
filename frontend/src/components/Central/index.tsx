@@ -29,10 +29,10 @@ const Central = () => (
           <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
             Consultar sinistro
           </Botao>
-          <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
+          <Botao type="link" to={`/NcParceir`} title="Consultar de sinistro">
             Consultar NC para parceiros
           </Botao>
-          <Botao type="link" to={`/CadSinistro`} title="Consultar de sinistro">
+          <Botao type="link" to={`/SiniSeguro`} title="Consultar de sinistro">
             Consultar sinistro no seguro
           </Botao>
         </S.ControlButtons>
