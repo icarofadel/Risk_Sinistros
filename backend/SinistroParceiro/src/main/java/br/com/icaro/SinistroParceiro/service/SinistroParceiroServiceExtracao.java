@@ -50,7 +50,7 @@ public class SinistroParceiroServiceExtracao {
 	    
 	    InputStream is = null;
 	    try {
-	        is = new ClassPathResource("static/papel_timbrado_grupo_ibl.jpg").getInputStream();
+	        is = new ClassPathResource("static/Logo.jpg").getInputStream();
 	        Image background = Image.getInstance(is.readAllBytes());
 	        background.setAbsolutePosition(0, 0);
 	        background.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());

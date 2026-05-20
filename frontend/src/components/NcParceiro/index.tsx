@@ -281,15 +281,9 @@ const NcParceiros = () => {
                 value={formData.sacador || ''}
                 onChange={(e) => handleInputChange('sacador', e.target.value)}
               >
-                <option value="Intermodal Brasíl Logística LTDA">
-                  Intermodal Brasíl Logística LTDA
-                </option>
-                <option value="Logic Pharma Armazéns Gerais LTDA">
-                  Logic Pharma Armazéns Gerais LTDA
-                </option>
-                <option value="IBL Transporte de Valores LTDA">
-                  IBL Transporte de Valores LTDA
-                </option>
+                <option value="Empresa 1">Empresa 1</option>
+                <option value="Empresa 2">Empresa 2</option>
+                <option value="Empresa 3">Empresa 3</option>
               </select>
             </S.Row>
 

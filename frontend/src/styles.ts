@@ -1,5 +1,4 @@
 import { createGlobalStyle, styled } from 'styled-components'
-import StarRisk from './assets/image/STAR-RISK.png'
 
 export const cores = {
   white: '#fff',
@@ -28,7 +27,6 @@ export const GlobalCss = createGlobalStyle`
 
   .fundo{
     background-color: #3c3c3c;
-    background-image: url(${StarRisk});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
