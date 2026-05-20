@@ -9,10 +9,13 @@ import org.springframework.http.HttpStatus;
 
 import br.com.icaro.Sinistro.domain.Sinistro;
 import br.com.icaro.Sinistro.service.SinistroService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@Tag(name = "Sinistros", description = "Endpoints para gerenciamento de sinistros")
 @RequestMapping(value = "/sinistro")
 public class SinistroResources {
     
@@ -21,12 +24,14 @@ public class SinistroResources {
 
     //Listar todos os sinistros
     @GetMapping
+    @Operation(summary = "Listar todos os sinistros")
     public ResponseEntity<List<Sinistro>> listarTodos() {
         return ResponseEntity.ok(sinistroService.listarTodos());
     }
     
     // Cadastro de sinistro
     @PostMapping
+    @Operation(summary = "Cadastrar novo sinistro")
     public ResponseEntity<Sinistro> cadastar(@RequestBody @Valid Sinistro sinistro) {
         return ResponseEntity.ok(sinistroService.cadastrarSinistro(sinistro));
     }
@@ -55,6 +60,7 @@ public class SinistroResources {
     
     // Atualizar sinistro
     @PutMapping("/{id}")
+    @Operation(summary = "Atualizar sinistro")
     public ResponseEntity<Sinistro> atualizar(@PathVariable Long id, @RequestBody @Valid Sinistro sinistro) {
         return ResponseEntity.ok(sinistroService.atualizarSinistro(id, sinistro));
     }
@@ -62,6 +68,7 @@ public class SinistroResources {
 
     // Exclusão de sinistro
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Excluir sinistro")
     public ResponseEntity<String> remover(@PathVariable(value = "id") Long id) {
         sinistroService.excluirSinistro(id);  // Exclui sinistro
         return ResponseEntity.ok("Removido com sucesso");
